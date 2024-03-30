@@ -44,8 +44,8 @@ const HomeScreen = ({ navigation }) => {
       />
       <HotelCard />
       <Button
-        title="Find Best Hotels"
-        onPress={() => navigation.navigate("FindHotelsScreen")}
+        title="Find best hotels in Finland"
+        onPress={() => navigation.navigate("FinlandScreen")}
       />
     </SafeAreaView>
   );

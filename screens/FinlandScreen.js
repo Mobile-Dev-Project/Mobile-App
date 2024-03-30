@@ -6,6 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import HomeScreen from './HomeScreen';
 import 'react-native-gesture-handler';
+import { firestore } from '../config/firebase';
 
 
 
