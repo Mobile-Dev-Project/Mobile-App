@@ -4,12 +4,14 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Menu, Provider } from 'react-native-paper';
 
-import HomeScreen from './screens/HomeScreen';
-import FinlandScreen from './screens/FinlandScreen';
-import WelcomeScreen from './screens/WelcomeScreen';
-import LoginScreen from './screens/LoginScreen';
-import SignUpScreen from './screens/SignUpScreen';
-import useAuth from './hooks/useAuth';
+import HomeScreen from "./screens/HomeScreen";
+import WelcomeScreen from "./screens/WelcomeScreen";
+import LoginScreen from "./screens/LoginScreen";
+import SignUpScreen from "./screens/SignUpScreen";
+import useAuth from "./hooks/useAuth";
+import FindHotelsScreen from "./screens/FindHotelsScreen";
+import DummyScreen from "./screens/DummyScreen";
+
 
 const Stack = createNativeStackNavigator();
 
@@ -42,7 +44,16 @@ const AppNavigation = () => {
               headerShown: true, // Adjust this as needed
             })}
           />
-          <Stack.Screen name="Finland" component={FinlandScreen} />
+          <Stack.Screen
+            name="FindHotelsScreen"
+            component={FindHotelsScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="DummyScreen"
+            component={DummyScreen}
+            options={{ headerShown: false }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     );
