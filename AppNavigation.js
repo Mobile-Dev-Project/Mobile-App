@@ -55,13 +55,8 @@ const AppNavigation = () => {
             options={{ headerShown: false }}
           />
           <Stack.Screen
-            name="FindHotelsScreen"
-            component={FindHotelsScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="DummyScreen"
-            component={DummyScreen}
+            name="FinlandScreen"
+            component={FinlandScreen}
             options={{ headerShown: false }}
           />
           <Stack.Screen

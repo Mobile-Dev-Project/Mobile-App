@@ -6,7 +6,7 @@ const Places = () => {
 
    const handleImagePress = () => {
      // Navigate to the desired screen when the image is pressed
-     navigation.navigate("DummyScreen");
+     navigation.navigate("FindHotelsScreen");
    };
   return (
     <View style={styles.content}>
