@@ -1,42 +1,57 @@
 import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from 'react-native'
-
+import { useNavigation } from '@react-navigation/native'
 
 const Places = () => {
+   const navigation = useNavigation();
+
+   const handleImagePress = () => {
+     // Navigate to the desired screen when the image is pressed
+     navigation.navigate("DummyScreen");
+   };
   return (
     <View style={styles.content}>
       <Text style={styles.heading}>Places</Text>
       <View style={styles.countryContainer}>
-        <View style={[styles.countryBox, { marginRight: 10 }]}>
           <TouchableOpacity
-          onPress={handleImagePress}> 
-          </TouchableOpacity>  
-          <Image
-            source={require("../assets/imgs/centaa.jpg")}
-            style={styles.countryImage}
-          />
-          <Text style={styles.countryText}>Centa Village</Text>
-        </View>
-        <View style={[styles.countryBox, { marginRight: 10 }]}>
+            onPress={handleImagePress}
+            style={[styles.countryBox, { marginRight: 10 }]}
+          >
+            <Image
+              source={require("../assets/imgs/centaa.jpg")}
+              style={styles.countryImage}
+            />
+            <Text style={styles.countryText}>Centa Village</Text>
+          </TouchableOpacity>
+        <TouchableOpacity
+            onPress={handleImagePress}
+            style={[styles.countryBox, { marginRight: 10 }]}
+          >
           <Image
             source={require("../assets/imgs/helsinki.jpg")}
             style={styles.countryImage}
           />
           <Text style={styles.countryText}>Helsinki</Text>
-        </View>
-        <View style={[styles.countryBox, { marginRight: 10 }]}>
+        </TouchableOpacity>
+        <TouchableOpacity
+            onPress={handleImagePress}
+            style={[styles.countryBox, { marginRight: 10 }]}
+          >
           <Image
             source={require("../assets/imgs/Oulu.jpg")}
             style={styles.countryImage}
           />
           <Text style={styles.countryText}>Oulu</Text>
-        </View>
-        <View style={styles.countryBox}>
+        </TouchableOpacity>
+        <TouchableOpacity
+            onPress={handleImagePress}
+            style={[styles.countryBox, { marginRight: 10 }]}
+          >
           <Image
             source={require("../assets/imgs/Tempere.jpg")}
             style={styles.countryImage}
           />
           <Text style={styles.countryText}>Tempere</Text>
-        </View>
+        </TouchableOpacity>
       </View>
     </View>
   );
