@@ -8,14 +8,8 @@ import {
   Dimensions,
   Image,
 } from "react-native";
-import { Button } from "react-native";
-
 const { width, height } = Dimensions.get("window");
-
-const HotelCard = () => {
-    const handlePress = () => {
-        console.log("Button Pressed");
-    };
+const HotelCard = () => {  
   const images = [
     require("../assets/imgs/courtyard.jpg"),
     require("../assets/imgs/radissa.jpg"),
@@ -51,7 +45,6 @@ const HotelCard = () => {
           keyExtractor={(item, index) => index.toString()} // Provide a unique key for each item
         />
       </View>
-        <Button style={styles.btn} onPress={handlePress} title="Find Best Hotels" />
     </View>
   );
 };
@@ -60,6 +53,8 @@ const styles = StyleSheet.create({
   container: {
     borderRadius: 10,
     marginTop: 30,
+    padding: 10,
+    
   },
   heading: {
     fontSize: 20,

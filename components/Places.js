@@ -1,6 +1,5 @@
-import { StyleSheet, Text, View, Image, ScrollView } from 'react-native'
-import RecommendCard from './RecommendCard'
-import HotelCard from './HotelCard';
+import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from 'react-native'
+
 
 const Places = () => {
   return (
@@ -8,6 +7,9 @@ const Places = () => {
       <Text style={styles.heading}>Places</Text>
       <View style={styles.countryContainer}>
         <View style={[styles.countryBox, { marginRight: 10 }]}>
+          <TouchableOpacity
+          onPress={handleImagePress}> 
+          </TouchableOpacity>  
           <Image
             source={require("../assets/imgs/centaa.jpg")}
             style={styles.countryImage}
@@ -36,13 +38,6 @@ const Places = () => {
           <Text style={styles.countryText}>Tempere</Text>
         </View>
       </View>
-      <RecommendCard
-        imageSources={[require("../assets/imgs/centaa.jpg")]}
-        heading="Centa Village"
-        subheading="North Oulu"
-        reviewCount="3 reviews"
-      />
-     <HotelCard />
     </View>
   );
 }

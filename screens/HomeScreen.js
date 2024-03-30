@@ -12,11 +12,15 @@ import { auth } from "../config/firebase";
 import { Ionicons } from "@expo/vector-icons";
 import Places from "../components/Places";
 import RecommendCard from "../components/RecommendCard";
+import HotelCard from "../components/HotelCard";
+import Button from "../components/Button";
 
-const HomeScreen = () => {
+
+const HomeScreen = ({ navigation }) => {
   const handleLogout = async () => {
     await signOut(auth);
   };
+  
 
   return (
     <SafeAreaView style={styles.container}>
@@ -32,10 +36,20 @@ const HomeScreen = () => {
         />
       </View>
       <Places />
+      <RecommendCard
+        imageSources={[require("../assets/imgs/centaa.jpg")]}
+        heading="Centa Village"
+        subheading="North Oulu"
+        reviewCount="3 reviews"
+      />
+      <HotelCard />
+      <Button
+        title="Find Best Hotels"
+        onPress={() => navigation.navigate("FindHotelsScreen")}
+      />
     </SafeAreaView>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -70,6 +84,7 @@ const styles = StyleSheet.create({
     borderColor: "white",
     margin: 8,
   },
+
 });
 
 export default HomeScreen;

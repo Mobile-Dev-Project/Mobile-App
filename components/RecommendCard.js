@@ -30,6 +30,7 @@ const RecommendCard = ({ imageSources, heading, subheading, reviewCount }) => {
 const styles = StyleSheet.create({
     content: {
         flex: 1,
+        padding: 10,
     },
   recommendHeading: {
     fontSize: 20,
@@ -37,13 +38,15 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     color: "white",
     marginTop: 10,
+    
   },
   card: {
     backgroundColor: "#fff",
     borderRadius: 10,
     borderColor: "#ddd",
     marginBottom: 10,
-    padding: 10,
+    padding: 3,
+    
   },
   image: {
     width: 80,
