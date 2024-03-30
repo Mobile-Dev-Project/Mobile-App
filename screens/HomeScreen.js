@@ -10,30 +10,31 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { signOut } from "firebase/auth";
 import { auth } from "../config/firebase";
 import { Ionicons } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
 import Places from "../components/Places";
 import RecommendCard from "../components/RecommendCard";
 import HotelCard from "../components/HotelCard";
-import Button from "../components/Button";
-
+import FinlandScreen from "./FinlandScreen";
 
 const HomeScreen = ({ navigation }) => {
   const handleLogout = async () => {
     await signOut(auth);
   };
-  
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={handleLogout} style={styles.iconContainer}>
-          <Ionicons name="person-outline" size={24} color="white" />
-          <Text style={styles.logoutText}>Log out</Text>
-        </TouchableOpacity>
         <TextInput
           style={styles.searchInput}
           placeholder="Search"
           placeholderTextColor="#A0A0A0"
         />
+        <TouchableOpacity
+          onPress={() => navigation.navigate("FindHotelsScreen")}
+          style={styles.btnsearch}
+        >
+          <Ionicons name="search" size={24} color="#123" />
+        </TouchableOpacity>
       </View>
       <Places />
       <RecommendCard
@@ -43,16 +44,31 @@ const HomeScreen = ({ navigation }) => {
         reviewCount="3 reviews"
       />
       <HotelCard />
-      <Button
-        title="Find Best Hotels"
-        onPress={() => navigation.navigate("FindHotelsScreen")}
-      />
+      <View style={styles.fotter}>
+        <View style={styles.iconContainer}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("FinlandScreen")}
+            style={styles.btnIcon}
+          >
+            <FontAwesome5 name="hotel" size={24} color="white" />
+            <Text style={{ color: "white" }}>Hotels</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.iconContainer}>
+          <TouchableOpacity onPress={handleLogout} style={styles.btnIcon}>
+            <Ionicons name="person" size={24} color="white" />
+            <Text style={styles.logoutText}>Log out</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     </SafeAreaView>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingTop: 16,
     backgroundColor: "#12372A",
   },
   header: {
@@ -84,7 +100,24 @@ const styles = StyleSheet.create({
     borderColor: "white",
     margin: 8,
   },
-
+  btnsearch: {
+    backgroundColor: "#fff",
+    padding: 5,
+    paddingHorizontal: 10,
+    borderRadius: 20,
+  },
+  fotter: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    padding: 16,
+    borderTopColor: "#fff",
+    borderTopWidth: 1,
+  },
+  btnIcon: {
+    alignItems: "center",
+    backgroundColor: "#12372A",
+    borderRadius: 20,
+  },
 });
 
 export default HomeScreen;

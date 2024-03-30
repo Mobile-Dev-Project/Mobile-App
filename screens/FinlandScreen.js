@@ -1,71 +1,74 @@
-import React from 'react';
-import { ScrollView, View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
-import { Video } from 'expo-av';
-import { Linking } from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer } from '@react-navigation/native';
-import HomeScreen from './HomeScreen';
-import 'react-native-gesture-handler';
-
-
+import React from "react";
+import {
+  ScrollView,
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
+import { Video } from "expo-av";
+import { Linking } from "react-native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { NavigationContainer } from "@react-navigation/native";
+import HomeScreen from "./HomeScreen";
+import "react-native-gesture-handler";
 
 // Define the destinations array outside of your FinlandScreen component
 const destinations = [
   {
-    name: 'Suomenlinna Sea Fortress',
-  location: 'Helsinki, Finland',
-  rating: '4.7',
-  
-    image: require('../assets/Suomenlinna.jpg'), // Correct path to your asset
+    name: "Suomenlinna Sea Fortress",
+    location: "Helsinki, Finland",
+    rating: "4.7",
+
+    image: require("../assets/Suomenlinna.jpg"), // Correct path to your asset
     url: "https://www.suomenlinna.fi/en/visitor/plan-your-visit/maps/",
   },
   {
-    name: 'Santa Claus Village',
-  location: 'Rovaniemi, Finland',
-  rating: '4.8',
-  
-    image: require('../assets/GlassResortAir3-2048x1210.jpg'), // Correct path to your asset
-    url: 'https://santaclausvillage.info/accommodation/glass-resort/',
+    name: "Santa Claus Village",
+    location: "Rovaniemi, Finland",
+    rating: "4.8",
+
+    image: require("../assets/GlassResortAir3-2048x1210.jpg"), // Correct path to your asset
+    url: "https://santaclausvillage.info/accommodation/glass-resort/",
   },
   {
-    name: 'Hotel Kämp',
-    location: 'Helsinki, Finland',
-    rating: '4.7',
-    reviews: '892',
-    image: require('../assets/Hotel_Kamp_Exterior_001.jpg'), 
-    url: "https://www.hotelkamp.com/?gad_source=1&gclid=Cj0KCQjw2PSvBhDjARIsAKc2cgMNAsbc6ta-984zc0Am_u295fsDr9yQpl7fY5vV95FFz9E9FyLfhpMaAlD2EALw_wcB"
+    name: "Hotel Kämp",
+    location: "Helsinki, Finland",
+    rating: "4.7",
+    reviews: "892",
+    image: require("../assets/Hotel_Kamp_Exterior_001.jpg"),
+    url: "https://www.hotelkamp.com/?gad_source=1&gclid=Cj0KCQjw2PSvBhDjARIsAKc2cgMNAsbc6ta-984zc0Am_u295fsDr9yQpl7fY5vV95FFz9E9FyLfhpMaAlD2EALw_wcB",
   },
   {
-    name: 'Arctic TreeHouse Hotel',
-    location: 'Rovaniemi, Finland',
-    rating: '4.6',
-    reviews: '763',
-    image: require('../assets/Arctic-TreeHouse-hotel-rovaniemi-lapland-1920x1152.jpg'), 
-    url:"https://arctictreehousehotel.com/"
+    name: "Arctic TreeHouse Hotel",
+    location: "Rovaniemi, Finland",
+    rating: "4.6",
+    reviews: "763",
+    image: require("../assets/Arctic-TreeHouse-hotel-rovaniemi-lapland-1920x1152.jpg"),
+    url: "https://arctictreehousehotel.com/",
   },
   {
-    name: 'Levi Spirit',
-    location: 'Levi, Finland',
-    rating: '4.8',
-    reviews: '428',
-    image: require('../assets/Hotelli_Vanajanlinna_Hameenlinna_Vanajanlinna_Group_ravintola_kokous_juhlat_haat_tapahtumat-1.jpg'), 
-    url: "https://vanajanlinna.fi/en/levispirit-home"
+    name: "Levi Spirit",
+    location: "Levi, Finland",
+    rating: "4.8",
+    reviews: "428",
+    image: require("../assets/Hotelli_Vanajanlinna_Hameenlinna_Vanajanlinna_Group_ravintola_kokous_juhlat_haat_tapahtumat-1.jpg"),
+    url: "https://vanajanlinna.fi/en/levispirit-home",
   },
   {
-    name: 'Lapland Hotels SnowVillage',
-    location: 'Kittilä, Finland',
-    rating: '4.5',
-    reviews: '317',
-    image: require('../assets/snowvillage_picture1-200x150,q=75.jpg'), 
-    url: "https://www.laplandhotels.com/FI/lapin-hotellit/yllas/lapland-hotels-snowvillage.html"
+    name: "Lapland Hotels SnowVillage",
+    location: "Kittilä, Finland",
+    rating: "4.5",
+    reviews: "317",
+    image: require("../assets/snowvillage_picture1-200x150,q=75.jpg"),
+    url: "https://www.laplandhotels.com/FI/lapin-hotellit/yllas/lapland-hotels-snowvillage.html",
   },
-  
-  
 ];
 
 // Define the DestinationItem component
 const DestinationItem = ({ destination }) => (
-  <TouchableOpacity 
+  <TouchableOpacity
     style={styles.itemContainer}
     onPress={() => {
       const url = destination.url;
@@ -90,8 +93,15 @@ const DestinationItem = ({ destination }) => (
 const FinlandScreen = () => {
   return (
     <ScrollView style={styles.container}>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate("HomeScreen");
+        }}
+      >
+        <Text>Go to HomeScreen</Text>
+      </TouchableOpacity>
       <Video
-        source={require('../assets/finland.mp4')} // Correct path to your video
+        source={require("../assets/finland.mp4")} // Correct path to your video
         rate={1.0}
         volume={1.0}
         isMuted={false}
@@ -103,7 +113,9 @@ const FinlandScreen = () => {
       <View style={styles.content}>
         <Text style={styles.title}>Finland</Text>
         <Text style={styles.description}>
-          Finland is known for its stunning natural landscapes, vibrant cities, and rich cultural heritage. Explore the beautiful lakes, enjoy the Northern Lights, and visit Santa Claus Village.
+          Finland is known for its stunning natural landscapes, vibrant cities,
+          and rich cultural heritage. Explore the beautiful lakes, enjoy the
+          Northern Lights, and visit Santa Claus Village.
         </Text>
         <Text style={styles.subtitle}>Popular Destinations</Text>
         {/* Map through destinations array to render DestinationItem components */}
@@ -121,7 +133,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   backgroundVideo: {
-    width: '100%',
+    width: "100%",
     height: 300,
   },
   content: {
@@ -129,7 +141,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 8,
   },
   description: {
@@ -138,13 +150,13 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 8,
   },
   itemContainer: {
-    flexDirection: 'row',
+    flexDirection: "row",
     marginBottom: 20,
-    alignItems: 'center',
+    alignItems: "center",
   },
   image: {
     width: 100,
@@ -156,12 +168,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   rating: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   ratingContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   reviews: {
     marginLeft: 4,
