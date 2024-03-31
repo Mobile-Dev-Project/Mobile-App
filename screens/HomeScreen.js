@@ -14,8 +14,7 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import Places from "../components/Places";
 import RecommendCard from "../components/RecommendCard";
 import HotelCard from "../components/HotelCard";
-import FinlandScreen from "./FinlandScreen";
-
+const FinlandScreen = React.lazy(() => import('./FinlandScreen'));
 const HomeScreen = ({ navigation }) => {
   const handleLogout = async () => {
     await signOut(auth);

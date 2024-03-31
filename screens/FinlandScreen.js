@@ -11,7 +11,7 @@ import { Video } from "expo-av";
 import { Linking } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
-import HomeScreen from "./HomeScreen";
+const HomeScreen = React.lazy(() => import("./HomeScreen"));
 import "react-native-gesture-handler";
 import { AntDesign } from "@expo/vector-icons";
 
