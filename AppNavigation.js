@@ -9,9 +9,8 @@ import WelcomeScreen from "./screens/WelcomeScreen";
 import LoginScreen from "./screens/LoginScreen";
 import SignUpScreen from "./screens/SignUpScreen";
 import useAuth from "./hooks/useAuth";
-import FindHotelsScreen from "./screens/FindHotelsScreen";
-import DummyScreen from "./screens/DummyScreen";
 import FinlandScreen from "./screens/FinlandScreen";
+import DetailsScreen from "./screens/DetailsScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -60,8 +59,8 @@ const AppNavigation = () => {
             options={{ headerShown: false }}
           />
           <Stack.Screen
-            name="FindHotelsScreen"
-            component={FindHotelsScreen}
+            name="DetailsScreen"
+            component={DetailsScreen}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>

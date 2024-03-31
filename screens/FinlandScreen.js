@@ -10,7 +10,7 @@ import {
 import { Video } from "expo-av";
 import { Linking } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
 const HomeScreen = React.lazy(() => import("./HomeScreen"));
 import "react-native-gesture-handler";
 
@@ -20,9 +20,7 @@ const destinations = [
     name: "Suomenlinna Sea Fortress",
     location: "Helsinki, Finland",
     rating: "4.7",
-
     image: require("../assets/Suomenlinna.jpg"), // Correct path to your asset
-    url: "https://www.suomenlinna.fi/en/visitor/plan-your-visit/maps/",
   },
   {
     name: "Santa Claus Village",
@@ -38,7 +36,6 @@ const destinations = [
     rating: "4.7",
     reviews: "892",
     image: require("../assets/Hotel_Kamp_Exterior_001.jpg"),
-    url: "https://www.hotelkamp.com/?gad_source=1&gclid=Cj0KCQjw2PSvBhDjARIsAKc2cgMNAsbc6ta-984zc0Am_u295fsDr9yQpl7fY5vV95FFz9E9FyLfhpMaAlD2EALw_wcB",
   },
   {
     name: "Arctic TreeHouse Hotel",
@@ -46,7 +43,6 @@ const destinations = [
     rating: "4.6",
     reviews: "763",
     image: require("../assets/Arctic-TreeHouse-hotel-rovaniemi-lapland-1920x1152.jpg"),
-    url: "https://arctictreehousehotel.com/",
   },
   {
     name: "Levi Spirit",
@@ -54,7 +50,6 @@ const destinations = [
     rating: "4.8",
     reviews: "428",
     image: require("../assets/Hotelli_Vanajanlinna_Hameenlinna_Vanajanlinna_Group_ravintola_kokous_juhlat_haat_tapahtumat-1.jpg"),
-    url: "https://vanajanlinna.fi/en/levispirit-home",
   },
   {
     name: "Lapland Hotels SnowVillage",
@@ -62,33 +57,39 @@ const destinations = [
     rating: "4.5",
     reviews: "317",
     image: require("../assets/snowvillage_picture1-200x150,q=75.jpg"),
-    url: "https://www.laplandhotels.com/FI/lapin-hotellit/yllas/lapland-hotels-snowvillage.html",
   },
 ];
 
 // Define the DestinationItem component
-const DestinationItem = ({ destination }) => (
-  <TouchableOpacity
-    style={styles.itemContainer}
-    onPress={() => {
-      const url = destination.url;
-      Linking.openURL(url).catch((err) =>
-        console.error("Failed opening page because: ", err.message)
-      );
-    }}
-  >
-    <Image source={destination.image} style={styles.image} />
-    <View style={styles.infoContainer}>
-      <Text style={styles.title}>{destination.name}</Text>
-      <Text style={styles.location}>{destination.location}</Text>
-      <View style={styles.ratingContainer}>
-        <Text style={styles.rating}>{destination.rating}</Text>
-        <Text style={styles.reviews}>({destination.reviews} Reviews)</Text>
-      </View>
-    </View>
-  </TouchableOpacity>
-);
+const DestinationItem = ({ destination }) => { 
+const navigation = useNavigation(); // Use useNavigation hook here
 
+  const handleImagePress = () => {
+    console.log("Pressed");
+    navigation.navigate("DetailsScreen", {
+      destination: destination,
+    });
+  };
+
+  return (
+    <TouchableOpacity
+      style={styles.itemContainer}
+      onPress={handleImagePress}
+    >
+      <Image source={destination.image} style={styles.image} />
+      <View style={styles.infoContainer}>
+        <Text style={styles.title}>{destination.name}</Text>
+        <Text style={styles.location}>{destination.location}</Text>
+        <View style={styles.ratingContainer}>
+          <Text style={styles.rating}>{destination.rating}</Text>
+          {destination.reviews && (
+            <Text style={styles.reviews}>({destination.reviews} Reviews)</Text>
+          )}
+        </View>
+      </View>
+    </TouchableOpacity>
+  );
+};
 // Main FinlandScreen component
 const FinlandScreen = () => {
   return (
