@@ -28,25 +28,23 @@ const RecommendCard = ({ imageSources, heading, subheading, reviewCount }) => {
 };
 
 const styles = StyleSheet.create({
-    content: {
-        flex: 1,
-        padding: 10,
-    },
+  content: {
+    flex: 1,
+    padding: 10,
+  },
   recommendHeading: {
     fontSize: 20,
     fontWeight: "bold",
     marginBottom: 10,
     color: "white",
-    marginTop: 10,
-    
   },
   card: {
-    backgroundColor: "#fff",
     borderRadius: 10,
-    borderColor: "#ddd",
     marginBottom: 10,
     padding: 3,
-    
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "white",
   },
   image: {
     width: 80,
@@ -68,6 +66,7 @@ const styles = StyleSheet.create({
   },
   reviewText: {
     marginLeft: 5,
+    color: "#A0A0A0",
   },
 });
 

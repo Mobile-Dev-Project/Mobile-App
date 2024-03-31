@@ -1,31 +1,45 @@
-import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 const Places = () => {
-   const navigation = useNavigation();
+  const navigation = useNavigation();
 
+<<<<<<< Updated upstream
    const handleImagePress = () => {
      // Navigate to the desired screen when the image is pressed
      navigation.navigate("FinlandScreen");
    };
+=======
+  const handleImagePress = () => {
+    // Navigate to the desired screen when the image is pressed
+    navigation.navigate("FindHotelsScreen");
+  };
+>>>>>>> Stashed changes
   return (
     <View style={styles.content}>
       <Text style={styles.heading}>Places</Text>
       <View style={styles.countryContainer}>
-          <TouchableOpacity
-            onPress={handleImagePress}
-            style={[styles.countryBox, { marginRight: 10 }]}
-          >
-            <Image
-              source={require("../assets/imgs/centaa.jpg")}
-              style={styles.countryImage}
-            />
-            <Text style={styles.countryText}>Centa Village</Text>
-          </TouchableOpacity>
         <TouchableOpacity
-            onPress={handleImagePress}
-            style={[styles.countryBox, { marginRight: 10 }]}
-          >
+          onPress={handleImagePress}
+          style={[styles.countryBox, { marginRight: 10 }]}
+        >
+          <Image
+            source={require("../assets/imgs/centaa.jpg")}
+            style={styles.countryImage}
+          />
+          <Text style={styles.countryText}>Centa Village</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={handleImagePress}
+          style={[styles.countryBox, { marginRight: 10 }]}
+        >
           <Image
             source={require("../assets/imgs/helsinki.jpg")}
             style={styles.countryImage}
@@ -33,9 +47,9 @@ const Places = () => {
           <Text style={styles.countryText}>Helsinki</Text>
         </TouchableOpacity>
         <TouchableOpacity
-            onPress={handleImagePress}
-            style={[styles.countryBox, { marginRight: 10 }]}
-          >
+          onPress={handleImagePress}
+          style={[styles.countryBox, { marginRight: 10 }]}
+        >
           <Image
             source={require("../assets/imgs/Oulu.jpg")}
             style={styles.countryImage}
@@ -43,9 +57,9 @@ const Places = () => {
           <Text style={styles.countryText}>Oulu</Text>
         </TouchableOpacity>
         <TouchableOpacity
-            onPress={handleImagePress}
-            style={[styles.countryBox, { marginRight: 10 }]}
-          >
+          onPress={handleImagePress}
+          style={[styles.countryBox, { marginRight: 10 }]}
+        >
           <Image
             source={require("../assets/imgs/Tempere.jpg")}
             style={styles.countryImage}
@@ -55,12 +69,12 @@ const Places = () => {
       </View>
     </View>
   );
-}
-export default Places
+};
+export default Places;
 const styles = StyleSheet.create({
   content: {
     flex: 1,
-    padding: 16,
+    padding: 10,
   },
   heading: {
     fontSize: 20,

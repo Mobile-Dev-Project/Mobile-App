@@ -10,10 +10,15 @@ import {
 import { Video } from "expo-av";
 import { Linking } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
+<<<<<<< Updated upstream
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
 const HomeScreen = React.lazy(() => import("./HomeScreen"));
+=======
+import { NavigationContainer } from "@react-navigation/native";
+>>>>>>> Stashed changes
 import "react-native-gesture-handler";
 import { AntDesign } from "@expo/vector-icons";
+const HomeScreen = React.lazy(() => import("./HomeScreen"));
 
 // Define the destinations array outside of your FinlandScreen component
 const destinations = [
@@ -95,22 +100,28 @@ const navigation = useNavigation(); // Use useNavigation hook here
 const FinlandScreen = ({ navigation }) => {
   return (
     <ScrollView style={styles.container}>
-      <TouchableOpacity
-        style={styles.backBtn}
-        onPress={() => navigation.goBack()}
-      >
-        <AntDesign name="arrowleft" size={24} color="white" />
-      </TouchableOpacity>
-      <Video
-        source={require("../assets/finland.mp4")} // Correct path to your video
-        rate={1.0}
-        volume={1.0}
-        isMuted={false}
-        resizeMode="cover"
-        shouldPlay
-        isLooping
-        style={styles.backgroundVideo}
-      />
+      <View style={styles.videoContainer}>
+        <View style={styles.BtnContain}>
+          <TouchableOpacity
+            style={styles.backBtn}
+            onPress={() => navigation.goBack()}
+          >
+            <AntDesign name="arrowleft" size={24} color="white" />
+          </TouchableOpacity>
+        </View>
+        <View style={styles.video}>
+          <Video
+            source={require("../assets/finland.mp4")}
+            rate={1.0}
+            volume={1.0}
+            isMuted={false}
+            resizeMode="cover"
+            shouldPlay
+            isLooping
+            style={styles.backgroundVideo}
+          />
+        </View>
+      </View>
       <View style={styles.content}>
         <Text style={styles.title}>Finland</Text>
         <Text style={styles.description}>
@@ -134,9 +145,23 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#6b2bff",
   },
+  videoContainer: {
+    display: "flex",
+    flexDirection: "row",
+  },
+  BtnContain: {
+    flex: -1,
+  },
+  video: {
+    flex: 3,
+  },
   backgroundVideo: {
-    width: "100%",
-    height: 300,
+    marginTop: 50,
+    marginLeft: -40,
+    width: "110%",
+    height: 200,
+    borderRadius: 10,
+    zIndex: -1,
   },
   content: {
     padding: 16,
@@ -162,11 +187,16 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginBottom: 20,
     alignItems: "center",
+    borderWidth: 1,
+    borderColor: "grey",
+    padding: 10,
+    borderRadius: 10,
+    borderColor: "#f5d507",
   },
   image: {
     width: 100,
     height: 100,
-    borderRadius: 50, // Adjusted for rounded images
+    borderRadius: 20, // Adjusted for rounded images
     marginRight: 16,
   },
   infoContainer: {

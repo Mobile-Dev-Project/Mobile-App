@@ -9,7 +9,7 @@ import {
   Image,
 } from "react-native";
 const { width, height } = Dimensions.get("window");
-const HotelCard = () => {  
+const HotelCard = () => {
   const images = [
     require("../assets/imgs/courtyard.jpg"),
     require("../assets/imgs/radissa.jpg"),
@@ -52,9 +52,7 @@ const HotelCard = () => {
 const styles = StyleSheet.create({
   container: {
     borderRadius: 10,
-    marginTop: 30,
     padding: 10,
-    
   },
   heading: {
     fontSize: 20,
@@ -83,7 +81,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     textDecorationLine: "underline",
   },
-   
 });
 
 export default HotelCard;
