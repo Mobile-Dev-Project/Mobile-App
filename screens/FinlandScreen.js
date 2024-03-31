@@ -13,6 +13,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import HomeScreen from "./HomeScreen";
 import "react-native-gesture-handler";
+import { AntDesign } from "@expo/vector-icons";
 
 // Define the destinations array outside of your FinlandScreen component
 const destinations = [
@@ -90,15 +91,14 @@ const DestinationItem = ({ destination }) => (
 );
 
 // Main FinlandScreen component
-const FinlandScreen = () => {
+const FinlandScreen = ({ navigation }) => {
   return (
     <ScrollView style={styles.container}>
       <TouchableOpacity
-        onPress={() => {
-          navigation.navigate("HomeScreen");
-        }}
+        style={styles.backBtn}
+        onPress={() => navigation.goBack()}
       >
-        <Text>Go to HomeScreen</Text>
+        <AntDesign name="arrowleft" size={24} color="white" />
       </TouchableOpacity>
       <Video
         source={require("../assets/finland.mp4")} // Correct path to your video
@@ -131,6 +131,7 @@ const FinlandScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#6b2bff",
   },
   backgroundVideo: {
     width: "100%",
@@ -143,15 +144,18 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 8,
+    color: "#f5d507",
   },
   description: {
     fontSize: 16,
     marginBottom: 16,
+    color: "white",
   },
   subtitle: {
     fontSize: 20,
     fontWeight: "bold",
     marginBottom: 8,
+    color: "white",
   },
   itemContainer: {
     flexDirection: "row",
@@ -170,6 +174,7 @@ const styles = StyleSheet.create({
   rating: {
     flexDirection: "row",
     alignItems: "center",
+    color: "white",
   },
   ratingContainer: {
     flexDirection: "row",
@@ -177,6 +182,19 @@ const styles = StyleSheet.create({
   },
   reviews: {
     marginLeft: 4,
+    color: "white",
+  },
+  backBtn: {
+    marginTop: 50,
+    marginBottom: 10,
+    padding: 10,
+    width: 45,
+    marginLeft: 10,
+    backgroundColor: "#dbc00f",
+    borderRadius: 150,
+  },
+  location: {
+    color: "white",
   },
 });
 

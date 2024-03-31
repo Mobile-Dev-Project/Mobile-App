@@ -70,7 +70,7 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#12372A",
+    backgroundColor: "#6b2bff",
     paddingTop: 40, // Add space from the top
   },
   btnContainer: {
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 20,
     paddingHorizontal: 16,
-    backgroundColor: "#12372A",
+    backgroundColor: "#6b2bff",
     color: "#000",
     borderWidth: 1, // Add border width
     borderColor: "white", // Set border color
