@@ -60,8 +60,8 @@ const AppNavigation = () => {
             options={{ headerShown: false }}
           />
           <Stack.Screen
-            name="FinlandScreen"
-            component={FinlandScreen}
+            name="FindHotelsScreen"
+            component={FindHotelsScreen}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>
