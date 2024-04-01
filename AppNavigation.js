@@ -11,6 +11,8 @@ import SignUpScreen from "./screens/SignUpScreen";
 import useAuth from "./hooks/useAuth";
 import FinlandScreen from "./screens/FinlandScreen";
 import DetailsScreen from "./screens/DetailsScreen";
+import ImageSlider from "./components/ImageSlider";
+import BookingScreen from "./screens/BookingScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -61,6 +63,16 @@ const AppNavigation = () => {
           <Stack.Screen
             name="DetailsScreen"
             component={DetailsScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="ImageSlider"
+            component={ImageSlider}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="BookingScreen"
+            component={BookingScreen}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>
