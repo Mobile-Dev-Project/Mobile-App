@@ -11,17 +11,10 @@ import { useNavigation } from "@react-navigation/native";
 const Places = () => {
   const navigation = useNavigation();
 
-<<<<<<< Updated upstream
-   const handleImagePress = () => {
-     // Navigate to the desired screen when the image is pressed
-     navigation.navigate("FinlandScreen");
-   };
-=======
   const handleImagePress = () => {
     // Navigate to the desired screen when the image is pressed
-    navigation.navigate("FindHotelsScreen");
+    navigation.navigate("FinlandScreen");
   };
->>>>>>> Stashed changes
   return (
     <View style={styles.content}>
       <Text style={styles.heading}>Places</Text>

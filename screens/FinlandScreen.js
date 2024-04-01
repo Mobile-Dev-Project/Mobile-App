@@ -10,12 +10,7 @@ import {
 import { Video } from "expo-av";
 import { Linking } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
-<<<<<<< Updated upstream
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
-const HomeScreen = React.lazy(() => import("./HomeScreen"));
-=======
-import { NavigationContainer } from "@react-navigation/native";
->>>>>>> Stashed changes
 import "react-native-gesture-handler";
 import { AntDesign } from "@expo/vector-icons";
 const HomeScreen = React.lazy(() => import("./HomeScreen"));
@@ -67,8 +62,8 @@ const destinations = [
 ];
 
 // Define the DestinationItem component
-const DestinationItem = ({ destination }) => { 
-const navigation = useNavigation(); // Use useNavigation hook here
+const DestinationItem = ({ destination }) => {
+  const navigation = useNavigation(); // Use useNavigation hook here
 
   const handleImagePress = () => {
     console.log("Pressed");
@@ -78,10 +73,7 @@ const navigation = useNavigation(); // Use useNavigation hook here
   };
 
   return (
-    <TouchableOpacity
-      style={styles.itemContainer}
-      onPress={handleImagePress}
-    >
+    <TouchableOpacity style={styles.itemContainer} onPress={handleImagePress}>
       <Image source={destination.image} style={styles.image} />
       <View style={styles.infoContainer}>
         <Text style={styles.title}>{destination.name}</Text>
