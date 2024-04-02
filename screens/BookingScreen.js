@@ -2,14 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, TextInput, TouchableOpacity, Text, Alert,   KeyboardAvoidingView,
   Platform, } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-
+import { FontAwesome5 } from "@expo/vector-icons";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { db, auth } from '../config/firebase'; // Adjust based on your actual path
 import { addDoc, collection } from 'firebase/firestore';
-import { onAuthStateChanged } from 'firebase/auth';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import { Ionicons } from "@expo/vector-icons";
 
 const BookingScreen = ({ navigation }) => {
+  
     const [currentUser, setCurrentUser] = useState(null);
     // Define state variables for the form fields
     const [name, setName] = useState('');
@@ -30,6 +32,11 @@ const BookingScreen = ({ navigation }) => {
         });
         return () => unsubscribe();
     }, []);
+
+    // Handle logout
+    const handleLogout = async () => {
+        await signOut(auth);
+    };
 
     const handleBooking = async () => {
         // Check if the user is logged in
@@ -147,6 +154,24 @@ const BookingScreen = ({ navigation }) => {
             <CustomButton title="Select Check-out Date" onPress={() => setCheckOutPickerShow(true)} />
             <CustomButton title="Book Now" onPress={handleBooking} />
         </View>
+        <View style={styles.footer}>
+        <View style={styles.iconContainer}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("FinlandScreen")}
+            style={styles.btnIcon}
+          >
+            <FontAwesome5 name="hotel" size={24} color="white" />
+            <Text style={{ color: "white" }}>Hotels</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.iconContainer}>
+          <TouchableOpacity onPress={handleLogout} style={styles.btnIcon}>
+            <Ionicons name="person" size={24} color="white" />
+            <Text style={styles.logoutText}>Log out</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    
       </KeyboardAwareScrollView>
     );
 };
@@ -203,6 +228,26 @@ const styles = StyleSheet.create({
       marginLeft: 10,
       backgroundColor: "#dbc00f",
       borderRadius: 150,
+  },
+  footer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    padding: 16,
+    borderTopColor: "#fff",
+    borderTopWidth: 1,
+    backgroundColor: "#6b2bff",
+  },
+  btnIcon: {
+    alignItems: "center",
+    borderRadius: 20,
+  },
+  logoutText: {
+    color: "white", 
+  },
+  iconContainer: {
+    marginRight: 10,
+    flexDirection: "row",
+    alignItems: "center",
   },
 
 });
