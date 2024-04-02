@@ -8,20 +8,43 @@ import {
   Dimensions,
   Image,
 } from "react-native";
+import { EvilIcons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
+
 const { width, height } = Dimensions.get("window");
 const HotelCard = () => {
-  const images = [
-    require("../assets/imgs/courtyard.jpg"),
-    require("../assets/imgs/radissa.jpg"),
-    require("../assets/imgs/skiin.jpg"),
-    require("../assets/imgs/clarion.jpg"),
+  const destination = [
+    {
+      name: "Courtyard",
+      image: require("../assets/imgs/courtyard.jpg"),
+      location: "Helsinki",
+      rate: 4.5,
+    },
+    {
+      name: "Radissa",
+      image: require("../assets/imgs/radissa.jpg"),
+      location: "Tampere",
+      rate: 4.2,
+    },
+    {
+      name: "Skiin",
+      image: require("../assets/imgs/skiin.jpg"),
+      location: "Turku",
+      rate: 4.7,
+    },
+    {
+      name: "Clarion",
+      image: require("../assets/imgs/clarion.jpg"),
+      location: "Oulu",
+      rate: 4.0,
+    },
   ];
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>Nearby Hotels</Text>
+      <Text style={styles.heading}>Top Rated</Text>
       <View>
         <FlatList
-          data={images}
+          data={destination}
           horizontal
           renderItem={({ item, index }) => {
             return (
@@ -29,7 +52,7 @@ const HotelCard = () => {
                 style={{ width: width * 0.4, height: height / 3, margin: 5 }}
               >
                 <Image
-                  source={item} // Use the current item as the image source
+                  source={item.image} // Use the current item as the image source
                   style={{
                     width: "100%",
                     height: "80%",
@@ -38,7 +61,20 @@ const HotelCard = () => {
                   }}
                   resizeMode="cover"
                 />
-                <Text style={styles.countryText}>Tempere {index + 1}</Text>
+                {/* Display the name, rateing and locations of the hotel */}
+                <View style={styles.disc}>
+                  <Text style={styles.countryText}>{item.name}</Text>
+                  <View style={styles.innerdisc}>
+                    <Text style={styles.subheading}>
+                      <EvilIcons name="location" size={14} color="white" />{" "}
+                      {item.location}
+                    </Text>
+                    <Text style={styles.reviews}>
+                      <AntDesign name="star" size={14} color="gold" />{" "}
+                      {item.rate}
+                    </Text>
+                  </View>
+                </View>
               </TouchableOpacity>
             );
           }}
@@ -57,29 +93,37 @@ const styles = StyleSheet.create({
   heading: {
     fontSize: 20,
     fontWeight: "bold",
-    color: "white",
+    color: "#f5d507",
     marginTop: 10,
     marginBottom: 5,
   },
   subheading: {
-    fontSize: 16,
+    fontSize: 12,
     color: "white",
-    marginBottom: 10,
+  },
+  disc: {
+    backgroundColor: "#6b2bff",
+    borderRadius: 10,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-around",
+  },
+  innerdisc: {
+    backgroundColor: "#6b2bff",
+    borderRadius: 10,
+    marginTop: 10,
   },
   countryText: {
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: "bold",
     color: "white",
     marginTop: 5,
     textAlign: "center",
   },
   reviews: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: "#3498db", // Change color as per your design
-    marginTop: 10,
+    fontSize: 12,
+    color: "white",
     textAlign: "center",
-    textDecorationLine: "underline",
   },
 });
 

@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     marginBottom: 20, // Only one definition for marginBottom
-    color: "white", // Set text color to white
+    color: "#f5d507", // Set text color to white
   },
   countryContainer: {
     flexDirection: "row",

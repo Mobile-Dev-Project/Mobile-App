@@ -34,7 +34,7 @@ const HomeScreen = ({ navigation }) => {
             onPress={() => navigation.navigate("FindHotelsScreen")}
             style={styles.btnsearch}
           >
-            <Ionicons name="search" size={34} color="#fff" />
+            <Ionicons name="search" size={34} color="#f5d507" />
           </TouchableOpacity>
         </View>
         <Places />
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     paddingHorizontal: 16,
     borderWidth: 1,
-    borderColor: "white",
+    borderColor: "#f5d507",
     margin: 8,
   },
   btnsearch: {

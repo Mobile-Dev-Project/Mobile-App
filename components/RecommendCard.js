@@ -36,15 +36,16 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     marginBottom: 10,
-    color: "white",
+    color: "#f5d507",
   },
   card: {
     borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#A0A0A0",
     marginBottom: 10,
     padding: 3,
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "white",
   },
   image: {
     width: 80,
@@ -53,6 +54,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   subHeading: {
+    color: "white",
     fontSize: 18,
     fontWeight: "bold",
     marginBottom: 5,
