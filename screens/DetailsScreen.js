@@ -3,11 +3,13 @@ import { Button, View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import ImageSlider from "../components/ImageSlider";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { signOut } from "firebase/auth";
+import { auth } from "../config/firebase";
 import { Ionicons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 
 const DetailsScreen = ({ navigation }) => {
   const handleLogout = async () => {
-    await signOut(); // Assuming signOut is an asynchronous function
+    await signOut(auth); // Assuming signOut is an asynchronous function
   };
 
   const handleBookNow = () => {
@@ -16,6 +18,15 @@ const DetailsScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      {/* Arrow icon */}
+      <View style={styles.arrowContainer}>
+        <TouchableOpacity
+          style={styles.backBtn}
+          onPress={() => navigation.goBack()}
+        >
+          <AntDesign name="arrowleft" size={24} color="white" />
+        </TouchableOpacity>
+      </View>
       <ImageSlider />
       <Text style={styles.heading}>
         Shore Excursion- City sightseeing and Suomenlinna from Helsinki Harbors
@@ -163,6 +174,27 @@ const styles = StyleSheet.create({
   btnIcon: {
     alignItems: "center",
     borderRadius: 20,
+  },
+  logoutText: {
+    color: "white",
+  },
+  iconContainer: {
+    marginRight: 10,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  arrowContainer: {
+    position: "absolute",
+    top: 40,
+    left: 10,
+    zIndex: 1,
+  },
+  backBtn: {
+    marginBottom: 10,
+    padding: 10,
+    marginLeft: 10,
+    backgroundColor: "#dbc00f",
+    borderRadius: 150,
   },
 });
 

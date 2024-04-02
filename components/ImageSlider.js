@@ -27,15 +27,6 @@ const ImageSlider = ({ navigation }) => {
     <View
       style={[styles.carouselContainer, { height: carouselContainerHeight }]}
     >
-      {/* Arrow icon */}
-      <View style={styles.arrowContainer}>
-        <TouchableOpacity
-          style={styles.backBtn}
-          onPress={() => navigation.goBack()}
-        >
-          <AntDesign name="arrowleft" size={24} color="white" />
-        </TouchableOpacity>
-      </View>
       {/* Carousel */}
       <Carousel
         style={styles.carousel}
@@ -73,19 +64,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     marginTop,
     position: "relative", // Ensure the arrow container is positioned relative to this container
-  },
-  arrowContainer: {
-    position: "absolute",
-    top: 10,
-    left: 10,
-    zIndex: 1,
-  },
-  backBtn: {
-    marginBottom: 10,
-    padding: 10,
-    marginLeft: 10,
-    backgroundColor: "#dbc00f",
-    borderRadius: 150,
   },
 });
 
