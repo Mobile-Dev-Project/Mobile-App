@@ -7,8 +7,9 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { db, auth } from '../config/firebase'; // Adjust based on your actual path
 import { addDoc, collection } from 'firebase/firestore';
 import { onAuthStateChanged } from 'firebase/auth';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
-const BookingScreen = () => {
+const BookingScreen = ({ navigation }) => {
     const [currentUser, setCurrentUser] = useState(null);
     // Define state variables for the form fields
     const [name, setName] = useState('');
@@ -74,9 +75,19 @@ const BookingScreen = () => {
             setCheckOutPickerShow(false); // Hide the picker
         }
     };
-
+    
     return (
       <KeyboardAwareScrollView style={{ flex: 1 }}>
+       
+        <View style={styles.BtnContain}>
+          <TouchableOpacity
+            style={styles.backBtn}
+            onPress={() => navigation.goBack()}
+          >
+            <AntDesign name="arrowleft" size={24} color="white" />
+          </TouchableOpacity>
+        </View>
+        <View style={styles.container}></View>
         <View style={styles.container}>
             <TextInput
                 style={styles.input}
@@ -165,7 +176,7 @@ const styles = StyleSheet.create({
         padding: 15,
         fontSize: 16,
         color: "#fff",
-        marginTop: 30,
+       
     },
     button: {
         backgroundColor: "orange",
@@ -179,6 +190,21 @@ const styles = StyleSheet.create({
         color: "#fff",
         fontSize: 16,
     },
+    backBtnContainer: {
+      alignSelf: 'flex-start', // Aligns the button to the left
+      marginTop: 10,
+      marginLeft: 10,
+  },
+    backBtn: {
+      marginTop: 50,
+      marginBottom: 10,
+      padding: 10,
+      width: 45,
+      marginLeft: 10,
+      backgroundColor: "#dbc00f",
+      borderRadius: 150,
+  },
+
 });
 
 export default BookingScreen;
