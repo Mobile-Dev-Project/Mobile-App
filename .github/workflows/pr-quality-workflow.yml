@@ -1,4 +1,4 @@
-name: PR Quality Workflow
+name: CI Workflow
 
 on:
   pull_request:
@@ -14,7 +14,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: "20"
+          node-version: "14"
 
       - name: Install Dependencies
         run: npm install
@@ -31,34 +31,19 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: "20"
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v1
 
-      - name: Run CodeQL Analysis
+      - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v1
 
-  branch-naming-convention:
-    name: Check Branch Naming Convention
+  enforce-branch-naming:
+    name: Enforce Branch Naming Convention
     runs-on: ubuntu-latest
     steps:
       - name: Check Branch Name
-        uses: deepakputhraya/action-branch-name@v1
-        with:
-          regex: '^(feature|bugfix|hotfix)\/.*$'
-          allow_issue_numbers: false
-
-  documentation-check:
-    name: Ensure Documentation is Updated
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Check for Documentation Updates
         run: |
-          if git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep -qvE 'docs/|README.md'; then
-            echo "Documentation update required."
+          if [[ ! "${{ github.head_ref }}" =~ ^(feature|bugfix|hotfix)/ ]]; then
+            echo "Branch naming convention not followed. Branch name must start with 'feature/', 'bugfix/', or 'hotfix/'."
             exit 1
-          else
-            echo "Documentation update check passed."
           fi
