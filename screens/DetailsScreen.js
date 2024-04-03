@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import ImageSlider from "../components/ImageSlider";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { signOut } from "firebase/auth";
@@ -13,7 +13,7 @@ const DetailsScreen = ({ navigation }) => {
   };
 
   const handleBookNow = () => {
-    navigation.navigate("BookingScreen"); // Navigate to BookingScreen when Book Now is pressed
+    navigation.navigate("SelectRoomScreen"); // Navigate to BookingScreen when Book Now is pressed
   };
 
   return (
@@ -57,11 +57,8 @@ const DetailsScreen = ({ navigation }) => {
         </View>
       </View>
       <View style={styles.priceContainer}>
-        <TouchableOpacity style={styles.priceButton}>
-          <Text style={styles.priceText}>$99</Text>
-        </TouchableOpacity>
         <TouchableOpacity style={styles.bookNowButton} onPress={handleBookNow}>
-          <Text style={styles.bookNowText}>Book Now</Text>
+          <Text style={styles.bookNowText}>Select Room</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.footer}>

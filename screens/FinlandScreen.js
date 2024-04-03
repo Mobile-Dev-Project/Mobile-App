@@ -27,7 +27,6 @@ const destinations = [
     name: "Santa Claus Village",
     location: "Rovaniemi, Finland",
     rating: "4.8",
-
     image: require("../assets/GlassResortAir3-2048x1210.jpg"), // Correct path to your asset
     url: "https://santaclausvillage.info/accommodation/glass-resort/",
   },
