@@ -10,7 +10,6 @@ import Carousel from "pinar";
 import Constants from "expo-constants";
 import { AntDesign } from "@expo/vector-icons";
 
-
 const data = [
   { id: 1, image: require("../assets/Suomenlinna.jpg") },
   { id: 2, image: require("../assets/imgs/LeviSpirit.jpg") },
@@ -61,8 +60,8 @@ const styles = StyleSheet.create({
   },
   carouselContainer: {
     height: (height - marginTop) / 1.9,
-    marginHorizontal: 10,
-    marginTop,
+    marginHorizontal: -10,
+    marginTop: marginTop - 30,
     position: "relative", // Ensure the arrow container is positioned relative to this container
   },
 });
