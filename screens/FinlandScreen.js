@@ -12,7 +12,7 @@ import { Linking } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import "react-native-gesture-handler";
-import { AntDesign } from "@expo/vector-icons";
+import { AntDesign, FontAwesome } from "@expo/vector-icons";
 const HomeScreen = React.lazy(() => import("./HomeScreen"));
 
 // Define the destinations array outside of your FinlandScreen component
@@ -21,14 +21,18 @@ const destinations = [
     name: "Suomenlinna Sea Fortress",
     location: "Helsinki, Finland",
     rating: "4.7",
+    reviews: "1123",
     image: require("../assets/Suomenlinna.jpg"), // Correct path to your asset
+    description:"Explore the beautiful city of Helsinki and visit the historic Suomenlinna Maritime Fortress on a guided tour. Learn about the history of the city and the fortress with a professional guide.",
   },
   {
     name: "Santa Claus Village",
     location: "Rovaniemi, Finland",
     rating: "4.8",
+    reviews: "987",
     image: require("../assets/GlassResortAir3-2048x1210.jpg"), // Correct path to your asset
     url: "https://santaclausvillage.info/accommodation/glass-resort/",
+    description:"Experience the magic of Christmas at Santa Claus Village in Rovaniemi. Meet Santa, ride a husky sled, and enjoy a traditional Finnish Christmas dinner.",
   },
   {
     name: "Hotel Kämp",
@@ -36,6 +40,7 @@ const destinations = [
     rating: "4.7",
     reviews: "892",
     image: require("../assets/Hotel_Kamp_Exterior_001.jpg"),
+    description:"Stay at the luxurious Hotel Kämp in Helsinki and enjoy world-class service and amenities. Explore the city's attractions and dine at the hotel's Michelin-starred restaurant.",
   },
   {
     name: "Arctic TreeHouse Hotel",
@@ -43,6 +48,7 @@ const destinations = [
     rating: "4.6",
     reviews: "763",
     image: require("../assets/Arctic-TreeHouse-hotel-rovaniemi-lapland-1920x1152.jpg"),
+    description:"Experience the magic of the Arctic Circle at the Arctic TreeHouse Hotel in Rovaniemi. Stay in a luxury treehouse and enjoy stunning views of the Northern Lights.",
   },
   {
     name: "Levi Spirit",
@@ -50,6 +56,7 @@ const destinations = [
     rating: "4.8",
     reviews: "428",
     image: require("../assets/Hotelli_Vanajanlinna_Hameenlinna_Vanajanlinna_Group_ravintola_kokous_juhlat_haat_tapahtumat-1.jpg"),
+    description:"Stay at the Levi Spirit luxury hotel in Levi and enjoy a range of outdoor activities, including skiing, snowboarding, and snowmobiling. Relax in the hotel's spa and dine at the on-site restaurant.",
   },
   {
     name: "Lapland Hotels SnowVillage",
@@ -57,6 +64,7 @@ const destinations = [
     rating: "4.5",
     reviews: "317",
     image: require("../assets/snowvillage_picture1-200x150,q=75.jpg"),
+    description:"Experience the magic of Lapland at the SnowVillage in Kittilä. Stay in a luxury ice hotel, explore the snow and ice sculptures, and enjoy a range of winter activities.",
   },
 ];
 
@@ -71,6 +79,23 @@ const DestinationItem = ({ destination }) => {
     });
   };
 
+  // Function to render star icons based on rating
+  const renderRatingStars = () => {
+    const rating = parseFloat(destination.rating); // Parse rating to float
+    const stars = [];
+    for (let i = 0; i < 5; i++) {
+      // Iterate 5 times for 5 stars
+      if (i < Math.floor(rating)) {
+        // Render filled star if index is less than rating
+        stars.push(<FontAwesome name="star" size={10} color="#f5d507" key={i} />);
+      } else {
+        // Render empty star if index is greater than or equal to rating
+        stars.push(<FontAwesome name="star-o" size={10} color="#f5d507" key={i} />);
+      }
+    }
+    return stars;
+  };
+
   return (
     <TouchableOpacity style={styles.itemContainer} onPress={handleImagePress}>
       <Image source={destination.image} style={styles.image} />
@@ -78,7 +103,9 @@ const DestinationItem = ({ destination }) => {
         <Text style={styles.title}>{destination.name}</Text>
         <Text style={styles.location}>{destination.location}</Text>
         <View style={styles.ratingContainer}>
+          {/* Render star icons for rating */}
           <Text style={styles.rating}>{destination.rating}</Text>
+          {renderRatingStars()}
           {destination.reviews && (
             <Text style={styles.reviews}>({destination.reviews} Reviews)</Text>
           )}
@@ -87,6 +114,7 @@ const DestinationItem = ({ destination }) => {
     </TouchableOpacity>
   );
 };
+
 // Main FinlandScreen component
 const FinlandScreen = ({ navigation }) => {
   return (

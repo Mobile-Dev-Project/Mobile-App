@@ -1,15 +1,40 @@
 import React from "react";
-import {View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import ImageSlider from "../components/ImageSlider";
-import { FontAwesome5 } from "@expo/vector-icons";
+import { FontAwesome5, FontAwesome } from "@expo/vector-icons";
 import { signOut } from "firebase/auth";
 import { auth } from "../config/firebase";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 
-const DetailsScreen = ({ navigation }) => {
+const DetailsScreen = ({ navigation, route }) => {
   const handleLogout = async () => {
     await signOut(auth); // Assuming signOut is an asynchronous function
+  };
+
+  const { destination } = route.params;
+  const { name, location, image, rating, description } = destination;
+
+  // Function to render rating stars
+  // Function to render star icons based on rating
+  const renderRatingStars = () => {
+    const rating = parseFloat(destination.rating); // Parse rating to float
+    const stars = [];
+    for (let i = 0; i < 5; i++) {
+      // Iterate 5 times for 5 stars
+      if (i < Math.floor(rating)) {
+        // Render filled star if index is less than rating
+        stars.push(
+          <FontAwesome name="star" size={10} color="#f5d507" key={i} />
+        );
+      } else {
+        // Render empty star if index is greater than or equal to rating
+        stars.push(
+          <FontAwesome name="star-o" size={10} color="#f5d507" key={i} />
+        );
+      }
+    }
+    return stars;
   };
 
   const handleBookNow = () => {
@@ -27,17 +52,15 @@ const DetailsScreen = ({ navigation }) => {
           <AntDesign name="arrowleft" size={24} color="white" />
         </TouchableOpacity>
       </View>
-      <ImageSlider />
+      <ImageSlider images={image} />
       <Text style={styles.heading}>
-        Shore Excursion- City sightseeing and Suomenlinna from Helsinki Harbors
+        {name} - {location} - {rating}
+        <View style={{ flexDirection: "row" }}>{renderRatingStars()}</View>
       </Text>
+
       <View style={styles.details}>
         <Text style={styles.mainHeading}>OverView</Text>
-        <Text style={styles.subHeading}>
-          Explore the beautiful city of Helsinki and visit the historic
-          Suomenlinna Maritime Fortress on a guided tour. Learn about the
-          history of the city and the fortress with a professional guide.
-        </Text>
+        <Text style={styles.subHeading}>{description}</Text>
       </View>
       <View style={styles.included}>
         <Text style={styles.includedHeading}>What's Included</Text>
