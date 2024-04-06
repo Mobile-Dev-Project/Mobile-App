@@ -58,7 +58,10 @@ const LoginScreen = ({ navigation }) => {
             value={password}
             onChangeText={(value) => setPassword(value)}
           />
-          <TouchableOpacity style={styles.forgotLink}>
+          <TouchableOpacity
+            style={styles.forgotLink}
+            onPress={() => navigation.navigate("PasswordRecovery")}
+          >
             <Text style={styles.forgotTxt}>Forgot Password?</Text>
           </TouchableOpacity>
           <View style={styles.containsignup}>
@@ -92,7 +95,7 @@ const LoginScreen = ({ navigation }) => {
 const styles = {
   container: {
     flex: 1,
-    backgroundColor: "#6b2bff",
+    backgroundColor: "#171717",
   },
   safeContainer: {
     display: "flex",
@@ -107,7 +110,7 @@ const styles = {
     position: "absolute",
     top: -70,
     left: 20,
-    backgroundColor: "#fde047",
+    backgroundColor: "#fcfcfc",
     padding: 10,
     borderRadius: 50,
   },
@@ -150,7 +153,8 @@ const styles = {
     marginTop: 10,
   },
   forgotTxt: {
-    color: "#6b2bff",
+    color: "#171717",
+    fontWeight: "bold",
     textAlign: "right",
   },
   containsignup: {
@@ -199,7 +203,7 @@ const styles = {
     marginLeft: 5,
   },
   txtlogin: {
-    color: "#6b2bff",
+    color: "#171717",
     fontWeight: "bold",
   },
 };
