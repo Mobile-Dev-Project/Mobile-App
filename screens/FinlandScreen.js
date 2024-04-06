@@ -162,7 +162,7 @@ const FinlandScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#6b2bff",
+    backgroundColor: "#171717",
   },
   videoContainer: {
     display: "flex",
@@ -240,7 +240,7 @@ const styles = StyleSheet.create({
     padding: 10,
     width: 45,
     marginLeft: 10,
-    backgroundColor: "#dbc00f",
+    backgroundColor: "#171717",
     borderRadius: 150,
   },
   location: {

@@ -5,46 +5,39 @@ import {
   TouchableOpacity,
   Image,
   TextInput,
+  Alert,
 } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ArrowLeftIcon } from "react-native-heroicons/solid";
-import {
-  createUserWithEmailAndPassword,
-  updateCurrentUser,
-  updateProfile,
-} from "firebase/auth";
+import { sendPasswordResetEmail } from "firebase/auth";
 import { auth } from "../config/firebase";
 
-const SignUpScreen = ({ navigation }) => {
-  const [name, setName] = useState("");
+const PasswordRecovery = ({ navigation }) => {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
 
-  const handleSignUp = async () => {
-    if (!name || !email || !password) {
-      alert("Please fill all the fields");
+  const handlePasswordReset = async () => {
+    if (!email) {
+      Alert.alert("Input Required", "Please enter your email address");
       return;
     }
 
     try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email.trim(),
-        password
-      );
-      await updateProfile(userCredential.user, {
-        displayName: name,
-      });
-      console.log(
-        "User signed up and name set: ",
-        userCredential.user.displayName
+      await sendPasswordResetEmail(auth, email.trim());
+      Alert.alert(
+        "Check Your Inbox",
+        "Password reset email sent. Please check your inbox."
       );
     } catch (err) {
-      console.log("Error in SignUp", err.message);
+      console.error("Error sending password reset email:", err.message);
+      Alert.alert(
+        "Error",
+        "Failed to send password reset email. Please try again."
+      );
     }
   };
 
+  const handleSignUp = async () => {};
   return (
     <View style={styles.container}>
       <SafeAreaView style={styles.safeContainer}>
@@ -59,13 +52,6 @@ const SignUpScreen = ({ navigation }) => {
       </SafeAreaView>
       <View style={styles.smscreen}>
         <View style={styles.smcover}>
-          <Text style={styles.emailtxt}>Full Name</Text>
-          <TextInput
-            style={styles.emailinput}
-            placeholder="Maxwell Gery"
-            value={name}
-            onChangeText={(value) => setName(value)}
-          />
           <Text style={styles.emailtxt}>Email Address</Text>
           <TextInput
             style={styles.emailinput}
@@ -73,29 +59,11 @@ const SignUpScreen = ({ navigation }) => {
             value={email}
             onChangeText={(value) => setEmail(value)}
           />
-          <Text style={styles.emailtxt}>Password</Text>
-          <TextInput
-            style={styles.emailinput}
-            placeholder="********"
-            secureTextEntry={true}
-            value={password}
-            onChangeText={(value) => setPassword(value)}
-          />
           <View style={styles.containsignup}>
-            <TouchableOpacity onPress={handleSignUp}>
-              <Text style={styles.txtsignup}>Sign Up</Text>
+            <TouchableOpacity onPress={handlePasswordReset}>
+              <Text style={styles.txtsignup}>Send Reset Emai</Text>
             </TouchableOpacity>
           </View>
-        </View>
-        {/* Already have an account? */}
-        <View style={styles.containlogin}>
-          <Text style={styles.text}>Already have an account?</Text>
-          <TouchableOpacity
-            style={styles.loginlink}
-            onPress={() => navigation.navigate("Login")}
-          >
-            <Text style={styles.txtlogin}>Log in</Text>
-          </TouchableOpacity>
         </View>
       </View>
     </View>
@@ -159,13 +127,6 @@ const styles = {
     borderRadius: 8,
     marginTop: 10,
   },
-  forgotLink: {
-    marginTop: 10,
-  },
-  forgotTxt: {
-    color: "#6b2bff",
-    textAlign: "right",
-  },
   containsignup: {
     display: "flex",
     justifyContent: "center",
@@ -182,23 +143,6 @@ const styles = {
     fontWeight: "bold",
     textAlign: "center",
   },
-
-  containlogin: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "center",
-    marginTop: 20,
-  },
-  text: {
-    color: "#000",
-  },
-  loginlink: {
-    marginLeft: 5,
-  },
-  txtlogin: {
-    color: "#6b2bff",
-    fontWeight: "bold",
-  },
 };
 
-export default SignUpScreen;
+export default PasswordRecovery;
