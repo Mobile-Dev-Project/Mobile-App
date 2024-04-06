@@ -9,39 +9,12 @@ import {
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ArrowLeftIcon } from "react-native-heroicons/solid";
-import {
-  signInWithEmailAndPassword,
-  getAuth,
-  signInWithPopup,
-  GoogleAuthProvider,
-} from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../config/firebase";
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  // const auth = getAuth();
-  // signInWithPopup(auth, provider)
-  //   .then((result) => {
-  //     // This gives you a Google Access Token. You can use it to access the Google API.
-  //     const credential = GoogleAuthProvider.credentialFromResult(result);
-  //     const token = credential.accessToken;
-  //     // The signed-in user info.
-  //     const user = result.user;
-  //     // IdP data available using getAdditionalUserInfo(result)
-  //     // ...
-  //   })
-  //   .catch((error) => {
-  //     // Handle Errors here.
-  //     const errorCode = error.code;
-  //     const errorMessage = error.message;
-  //     // The email of the user's account used.
-  //     const email = error.customData.email;
-  //     // The AuthCredential type that was used.
-  //     const credential = GoogleAuthProvider.credentialFromError(error);
-  //     // ...
-  //   });
 
   const handleLogin = async () => {
     if (!email || !password) {
@@ -64,7 +37,7 @@ const LoginScreen = ({ navigation }) => {
             style={styles.arrowBtn}
             onPress={() => navigation.goBack()}
           >
-            <ArrowLeftIcon style={{ color: "#171717" }} />
+            <ArrowLeftIcon style={{ color: "#000" }} />
           </TouchableOpacity>
         </View>
       </SafeAreaView>
@@ -85,10 +58,7 @@ const LoginScreen = ({ navigation }) => {
             value={password}
             onChangeText={(value) => setPassword(value)}
           />
-          <TouchableOpacity
-            style={styles.forgotLink}
-            onPress={() => navigation.navigate("PasswordRecovery")}
-          >
+          <TouchableOpacity style={styles.forgotLink}>
             <Text style={styles.forgotTxt}>Forgot Password?</Text>
           </TouchableOpacity>
           <View style={styles.containsignup}>
@@ -122,7 +92,7 @@ const LoginScreen = ({ navigation }) => {
 const styles = {
   container: {
     flex: 1,
-    backgroundColor: "#171717",
+    backgroundColor: "#6b2bff",
   },
   safeContainer: {
     display: "flex",
@@ -137,7 +107,7 @@ const styles = {
     position: "absolute",
     top: -70,
     left: 20,
-    backgroundColor: "#fcfcfc",
+    backgroundColor: "#fde047",
     padding: 10,
     borderRadius: 50,
   },

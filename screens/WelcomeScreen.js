@@ -33,7 +33,7 @@ const WelcomeScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#171717",
+    backgroundColor: "#6b2bff",
   },
   cover: {
     display: "flex",

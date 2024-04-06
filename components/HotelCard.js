@@ -99,30 +99,30 @@ const styles = StyleSheet.create({
   },
   subheading: {
     fontSize: 12,
-    color: "#fcfcfc",
+    color: "white",
   },
   disc: {
-    backgroundColor: "#171717",
+    backgroundColor: "#6b2bff",
     borderRadius: 10,
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-around",
   },
   innerdisc: {
-    backgroundColor: "#171717",
+    backgroundColor: "#6b2bff",
     borderRadius: 10,
     marginTop: 10,
   },
   countryText: {
     fontSize: 20,
     fontWeight: "bold",
-    color: "#fcfcfc",
+    color: "white",
     marginTop: 5,
     textAlign: "center",
   },
   reviews: {
     fontSize: 12,
-    color: "#fcfcfc",
+    color: "white",
     textAlign: "center",
   },
 });
