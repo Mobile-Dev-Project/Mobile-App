@@ -47,20 +47,31 @@ const BookingScreen = ({ navigation }) => {
   };
 
   const handleBooking = async () => {
-    // Check if the user is logged in
     if (!currentUser) {
       Alert.alert("Error", "You must be logged in to make a booking.");
       return;
     }
+  
+    const emailRegex = /\S+@\S+\.\S+/; // Simple regex for email validation
+    if (!name.trim() || !guests.trim() || !roomType || !contact.trim() || !emailRegex.test(contact)) {
+      Alert.alert("Validation Error", "Please fill in all fields correctly. Ensure the contact is a valid email.");
+      return;
+    }
+  
+    const numberOfGuests = parseInt(guests, 10);
+    if (isNaN(numberOfGuests) || numberOfGuests <= 0) {
+      Alert.alert("Validation Error", "Number of guests must be a positive number.");
+      return;
+    }
+  
     const totalPrice = calculatePrice();
-    // Attempt to add a new booking to Firestore
     try {
       await addDoc(collection(db, "bookings"), {
         userId: currentUser.uid,
         name,
         checkInDate: checkInDate.toISOString().split("T")[0],
         checkOutDate: checkOutDate.toISOString().split("T")[0],
-        guests: parseInt(guests, 10),
+        guests: numberOfGuests,
         roomType,
         specialRequests,
         contact,
@@ -72,7 +83,7 @@ const BookingScreen = ({ navigation }) => {
       Alert.alert("Error", "Booking failed.");
     }
   };
-
+  
   // Calculate the total price based on the number of nights
   const calculatePrice = () => {
     const diffTime = Math.abs(checkOutDate - checkInDate);
