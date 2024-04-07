@@ -17,6 +17,7 @@ import { addDoc, collection } from "firebase/firestore";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import { Ionicons } from "@expo/vector-icons";
+import { Picker } from '@react-native-picker/picker';
 
 const BookingScreen = ({ navigation }) => {
   const [currentUser, setCurrentUser] = useState(null);
@@ -123,14 +124,19 @@ const BookingScreen = ({ navigation }) => {
           onChangeText={setGuests}
         />
 
-        <Text style={styles.inputref}>Room Type</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="e.g., Single, Double, Suite"
-          placeholderTextColor="#575757"
-          value={roomType}
-          onChangeText={setRoomType}
-        />
+<Text style={styles.inputref}>Room Type</Text>
+<Picker
+  selectedValue={roomType}
+  style={styles.picker}
+  dropdownIconColor={"#fff"}
+  onValueChange={(itemValue, itemIndex) => setRoomType(itemValue)}
+>
+  <Picker.Item label="Select Room Type" value="" />
+  <Picker.Item label="Single" value="Single" />
+  <Picker.Item label="Double" value="Double" />
+  <Picker.Item label="Suite" value="Suite" />
+</Picker>
+
 
         <Text style={styles.inputref}>Contact</Text>
         <TextInput
@@ -272,6 +278,15 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     marginBottom: 16,
   },
+  picker: {
+    height: 50,
+    width: '100%',
+    color: '#fff',
+    backgroundColor: '#333',
+    marginBottom: 10,
+    borderRadius: 5,
+  },
+  
 });
 
 export default BookingScreen;
