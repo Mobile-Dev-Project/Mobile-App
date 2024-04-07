@@ -14,10 +14,13 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 
-const DetailsScreen = ({ navigation }) => {
+const DetailsScreen = ({ navigation, route }) => {
   const handleBookNow = () => {
     navigation.navigate("SelectRoomScreen"); // Navigate to BookingScreen when Book Now is pressed
   };
+
+  const { destination } = route.params;
+  const { name, location, image, rating, description, reviews } = destination;
 
   return (
     <ScrollView style={styles.container}>
@@ -31,17 +34,17 @@ const DetailsScreen = ({ navigation }) => {
         </TouchableOpacity>
       </View>
       <ImageSlider />
-      <Text style={styles.heading}>Hilton Helsinki Strand</Text>
+      <Text style={styles.heading}>{name}</Text>
       {/* add a rating and reviews here */}
       <View style={styles.locaRate}>
         <View style={styles.locacont}>
           <FontAwesome5 name="map-marker-alt" size={16} color="#fcfcfc" />
-          <Text style={styles.location}>Helsinki, Finland</Text>
+          <Text style={styles.location}>{location}</Text>
         </View>
         <View style={styles.ratecont}>
           <AntDesign name="star" size={16} color="#fcfcfc" />
-          <Text style={styles.rate}>4.5</Text>
-          <Text style={styles.review}>(317 Reviews)</Text>
+          <Text style={styles.rate}>{rating}</Text>
+          <Text style={styles.review}>({reviews})</Text>
         </View>
       </View>
       {/* guestes, bed and room details */}
@@ -90,10 +93,7 @@ const DetailsScreen = ({ navigation }) => {
       <View style={styles.overview}>
         <Text style={styles.heading}>Overview</Text>
         <Text style={styles.location}>
-          Hilton Helsinki Strand is a luxury hotel located in Helsinki, Finland.
-          The hotel offers a variety of amenities including a spa, fitness
-          center, and restaurant. The hotel is located in the heart of Helsinki
-          and is within walking distance of many popular attractions.
+          {description}
         </Text>
       </View>
       {/* price per night  and person details with new style */}
