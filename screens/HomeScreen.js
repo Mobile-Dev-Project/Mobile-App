@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -8,15 +8,27 @@ import {
   ScrollView,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { signOut } from "firebase/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../config/firebase";
+
 import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import Places from "../components/Places";
 import RecommendCard from "../components/RecommendCard";
 import HotelCard from "../components/HotelCard";
+
 const FinlandScreen = React.lazy(() => import("./FinlandScreen"));
+
 const HomeScreen = ({ navigation }) => {
+  const [currentUser, setCurrentUser] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setCurrentUser(user);
+    });
+    return () => unsubscribe();
+  }, []);
+
   const handleLogout = async () => {
     await signOut(auth);
   };
@@ -37,6 +49,12 @@ const HomeScreen = ({ navigation }) => {
             <Ionicons name="search" size={34} color="#fcfcfc" />
           </TouchableOpacity>
         </View>
+        <Text style={styles.inputref}>
+          Welcome{" "}
+          <Text style={{ color: "#fde047", fontStyle: "italic" }}>
+            {currentUser?.displayName}
+          </Text>
+        </Text>
         <Places />
         <RecommendCard
           imageSources={[require("../assets/imgs/centaa.jpg")]}
@@ -95,17 +113,25 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderWidth: 1,
     borderColor: "#fcfcfc",
-    margin: 8,
+    margin: 4,
   },
   btnsearch: {
     paddingHorizontal: 10,
   },
+  inputref: {
+    fontSize: 28,
+    fontWeight: "bold",
+    color: "white",
+    margin: 12,
+  },
   fotter: {
     flexDirection: "row",
     justifyContent: "space-around",
-    padding: 13,
-    borderTopColor: "#fff",
-    borderTopWidth: 1,
+    padding: 8,
+    margin: 12,
+    borderColor: "#fff",
+    borderWidth: 1,
+    borderRadius: 30,
   },
   btnIcon: {
     alignItems: "center",

@@ -1,255 +1,277 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, TextInput, TouchableOpacity, Text, Alert,   KeyboardAvoidingView,
-  Platform, } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import React, { useState, useEffect } from "react";
+import {
+  StyleSheet,
+  View,
+  TextInput,
+  TouchableOpacity,
+  Text,
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { FontAwesome5 } from "@expo/vector-icons";
-import DateTimePicker from '@react-native-community/datetimepicker';
-import { db, auth } from '../config/firebase'; // Adjust based on your actual path
-import { addDoc, collection } from 'firebase/firestore';
-import { onAuthStateChanged, signOut } from 'firebase/auth';
-import AntDesign from 'react-native-vector-icons/AntDesign';
+import DateTimePicker from "@react-native-community/datetimepicker";
+import { db, auth } from "../config/firebase"; // Adjust based on your actual path
+import { addDoc, collection } from "firebase/firestore";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import AntDesign from "react-native-vector-icons/AntDesign";
 import { Ionicons } from "@expo/vector-icons";
 
 const BookingScreen = ({ navigation }) => {
-  
-    const [currentUser, setCurrentUser] = useState(null);
-    // Define state variables for the form fields
-    const [name, setName] = useState('');
-    const [guests, setGuests] = useState('');
-    const [roomType, setRoomType] = useState('');
-    const [specialRequests, setSpecialRequests] = useState('');
-    const [contact, setContact] = useState('');
-    // State for managing date picker visibility and selected dates
-    const [checkInDate, setCheckInDate] = useState(new Date());
-    const [checkOutDate, setCheckOutDate] = useState(new Date());
-    const [isCheckInPickerShow, setCheckInPickerShow] = useState(false);
-    const [isCheckOutPickerShow, setCheckOutPickerShow] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
+  // Define state variables for the form fields
+  const [name, setName] = useState("");
+  const [guests, setGuests] = useState("");
+  const [roomType, setRoomType] = useState("");
+  const [specialRequests, setSpecialRequests] = useState("");
+  const [contact, setContact] = useState("");
+  // State for managing date picker visibility and selected dates
+  const [checkInDate, setCheckInDate] = useState(new Date());
+  const [checkOutDate, setCheckOutDate] = useState(new Date());
+  const [isCheckInPickerShow, setCheckInPickerShow] = useState(false);
+  const [isCheckOutPickerShow, setCheckOutPickerShow] = useState(false);
 
-    // useEffect hook for auth state changes
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
-            setCurrentUser(user);
-        });
-        return () => unsubscribe();
-    }, []);
+  // useEffect hook for auth state changes
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setCurrentUser(user);
+    });
+    return () => unsubscribe();
+  }, []);
 
-    // Handle logout
-    const handleLogout = async () => {
-        await signOut(auth);
-    };
+  // Handle logout
+  const handleLogout = async () => {
+    await signOut(auth);
+  };
 
-    const handleBooking = async () => {
-        // Check if the user is logged in
-        if (!currentUser) {
-            Alert.alert('Error', 'You must be logged in to make a booking.');
-            return;
-        }
-        const totalPrice = calculatePrice();
-        // Attempt to add a new booking to Firestore
-        try {
-            await addDoc(collection(db, 'bookings'), {
-                userId: currentUser.uid,
-                name,
-                checkInDate: checkInDate.toISOString().split('T')[0],
-                checkOutDate: checkOutDate.toISOString().split('T')[0],
-                guests: parseInt(guests, 10),
-                roomType,
-                specialRequests,
-                contact,
-                totalPrice,
-            });
-            Alert.alert('Success', 'Booking successful.');
-        } catch (error) {
-            console.error(error);
-            Alert.alert('Error', 'Booking failed.');
-        }
-    };
+  const handleBooking = async () => {
+    // Check if the user is logged in
+    if (!currentUser) {
+      Alert.alert("Error", "You must be logged in to make a booking.");
+      return;
+    }
+    const totalPrice = calculatePrice();
+    // Attempt to add a new booking to Firestore
+    try {
+      await addDoc(collection(db, "bookings"), {
+        userId: currentUser.uid,
+        name,
+        checkInDate: checkInDate.toISOString().split("T")[0],
+        checkOutDate: checkOutDate.toISOString().split("T")[0],
+        guests: parseInt(guests, 10),
+        roomType,
+        specialRequests,
+        contact,
+        totalPrice,
+      });
+      Alert.alert("Success", "Booking successful.");
+    } catch (error) {
+      console.error(error);
+      Alert.alert("Error", "Booking failed.");
+    }
+  };
 
-    // Calculate the total price based on the number of nights
-    const calculatePrice = () => {
-        const diffTime = Math.abs(checkOutDate - checkInDate);
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-        return diffDays * 90; // Assuming 90 euros per night
-    };
+  // Calculate the total price based on the number of nights
+  const calculatePrice = () => {
+    const diffTime = Math.abs(checkOutDate - checkInDate);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays * 90; // Assuming 90 euros per night
+  };
 
-    // Handlers for date change
-    const onDateChange = (event, selectedDate, isCheckIn) => {
-        if (isCheckIn) {
-            setCheckInDate(selectedDate || checkInDate);
-            setCheckInPickerShow(false); // Hide the picker
-        } else {
-            setCheckOutDate(selectedDate || checkOutDate);
-            setCheckOutPickerShow(false); // Hide the picker
-        }
-    };
-    
-    return (
-      <KeyboardAwareScrollView style={{ flex: 1 }}>
-       
+  // Handlers for date change
+  const onDateChange = (event, selectedDate, isCheckIn) => {
+    if (isCheckIn) {
+      setCheckInDate(selectedDate || checkInDate);
+      setCheckInPickerShow(false); // Hide the picker
+    } else {
+      setCheckOutDate(selectedDate || checkOutDate);
+      setCheckOutPickerShow(false); // Hide the picker
+    }
+  };
+
+  return (
+    <View style={styles.container}>
+      <KeyboardAwareScrollView>
         <View style={styles.BtnContain}>
           <TouchableOpacity
             style={styles.backBtn}
             onPress={() => navigation.goBack()}
           >
-            <AntDesign name="arrowleft" size={24} color="white" />
+            <AntDesign name="arrowleft" size={24} color="#171717" />
           </TouchableOpacity>
         </View>
-        <View style={styles.container}></View>
-        <View style={styles.container}>
-            <TextInput
-                style={styles.input}
-                placeholder="Name"
-                placeholderTextColor="#fff"
-                value={name}
-                onChangeText={setName}
-            />
-            <TextInput
-                style={styles.input}
-                placeholder="Number of Guests"
-                placeholderTextColor="#fff"
-                keyboardType="number-pad"
-                value={guests}
-                onChangeText={setGuests}
-            />
-            <TextInput
-                style={styles.input}
-                placeholder="Room Type (e.g., Single, Double)"
-                placeholderTextColor="#fff"
-                value={roomType}
-                onChangeText={setRoomType}
-            />
-            <TextInput
-                style={styles.input}
-                placeholder="Special Requests"
-                placeholderTextColor="#fff"
-                value={specialRequests}
-                onChangeText={setSpecialRequests}
-            />
-            <TextInput
-                style={styles.input}
-                placeholder="Contact Email or Phone"
-                placeholderTextColor="#fff"
-                value={contact}
-                onChangeText={setContact}
-            />
-            {/* Date pickers for check-in and check-out dates */}
-            {isCheckInPickerShow && (
-                <DateTimePicker
-                    value={checkInDate}
-                    mode="date"
-                    display="default"
-                    onChange={(event, date) => onDateChange(event, date, true)}
-                />
-            )}
-            {isCheckOutPickerShow && (
-                <DateTimePicker
-                    value={checkOutDate}
-                    mode="date"
-                    display="default"
-                    onChange={(event, date) => onDateChange(event, date, false)}
-                />
-            )}
-            {/* Custom buttons for selecting dates and making a booking */}
-            <CustomButton title="Select Check-in Date" onPress={() => setCheckInPickerShow(true)} />
-            <CustomButton title="Select Check-out Date" onPress={() => setCheckOutPickerShow(true)} />
-            <CustomButton title="Book Now" onPress={handleBooking} />
-        </View>
-        <View style={styles.footer}>
-        <View style={styles.iconContainer}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("FinlandScreen")}
-            style={styles.btnIcon}
-          >
-            <FontAwesome5 name="hotel" size={24} color="white" />
-            <Text style={{ color: "white" }}>Hotels</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.iconContainer}>
-          <TouchableOpacity onPress={handleLogout} style={styles.btnIcon}>
-            <Ionicons name="person" size={24} color="white" />
-            <Text style={styles.logoutText}>Log out</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    
-      </KeyboardAwareScrollView>
-    );
-};
+        <Text style={styles.heading}>Book a Room</Text>
 
-// Custom button component for styling
-const CustomButton = ({ title, onPress }) => (
-    <TouchableOpacity onPress={onPress} style={styles.button}>
-        <Text style={styles.buttonText}>{title}</Text>
-    </TouchableOpacity>
-);
+        {/* Text that implies this is a name text input */}
+        <Text style={styles.inputref}>Name</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Mati Kif"
+          placeholderTextColor="#575757"
+          value={name}
+          onChangeText={setName}
+        />
+
+        <Text style={styles.inputref}>Number of Guests</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="eg. 2"
+          placeholderTextColor="#575757"
+          keyboardType="number-pad"
+          value={guests}
+          onChangeText={setGuests}
+        />
+
+        <Text style={styles.inputref}>Room Type</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="e.g., Single, Double, Suite"
+          placeholderTextColor="#575757"
+          value={roomType}
+          onChangeText={setRoomType}
+        />
+
+        <Text style={styles.inputref}>Contact</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="mati@gmail.com, 123-456-7890"
+          placeholderTextColor="#575757"
+          value={contact}
+          onChangeText={setContact}
+        />
+
+        <Text style={styles.inputref}>Special Requests</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Special Requests"
+          placeholderTextColor="#575757"
+          value={specialRequests}
+          onChangeText={setSpecialRequests}
+        />
+        {/* Date pickers for check-in and check-out dates */}
+
+        {isCheckInPickerShow && (
+          <DateTimePicker
+            value={checkInDate}
+            mode="date"
+            display="default"
+            onChange={(event, date) => onDateChange(event, date, true)}
+          />
+        )}
+        {isCheckOutPickerShow && (
+          <DateTimePicker
+            value={checkOutDate}
+            mode="date"
+            display="default"
+            onChange={(event, date) => onDateChange(event, date, false)}
+          />
+        )}
+        {/* Custom buttons for selecting dates and making a booking */}
+        <View style={styles.customContainer}>
+          <TouchableOpacity
+            style={styles.buttondate}
+            onPress={() => setCheckInPickerShow(true)}
+          >
+            <View style={styles.iconContainer}>
+              <Ionicons name="calendar" size={24} color="#171717" />
+              <Text style={styles.buttonText}>Check-in Date</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.buttondate}
+            onPress={() => setCheckOutPickerShow(true)}
+          >
+            <View style={styles.iconContainer}>
+              <Ionicons name="calendar" size={24} color="#171717" />
+              <Text style={styles.buttonText}>Check-out Date</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+        <TouchableOpacity style={styles.button} onPress={handleBooking}>
+          <Text style={styles.buttonTextBook}>Book Now</Text>
+        </TouchableOpacity>
+      </KeyboardAwareScrollView>
+    </View>
+  );
+};
 
 // Styles
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: 20,
-        backgroundColor: "#6b2bff",
-    },
-    input: {
-        width: '100%',
-        marginBottom: 10,
-        borderWidth: 1,
-        borderColor: '#fff',
-        borderRadius: 5,
-        padding: 15,
-        fontSize: 16,
-        color: "#fff",
-       
-    },
-    button: {
-        backgroundColor: "orange",
-        padding: 15,
-        borderRadius: 5,
-        marginBottom: 15,
-        width: '100%',
-        alignItems: 'center',
-    },
-    buttonText: {
-        color: "#fff",
-        fontSize: 16,
-    },
-    backBtnContainer: {
-      alignSelf: 'flex-start', // Aligns the button to the left
-      marginTop: 10,
-      marginLeft: 10,
-  },
-    backBtn: {
-      marginTop: 50,
-      marginBottom: 10,
-      padding: 10,
-      width: 45,
-      marginLeft: 10,
-      backgroundColor: "#dbc00f",
-      borderRadius: 150,
-  },
-  footer: {
-    flexDirection: "row",
-    justifyContent: "space-around",
+  container: {
+    flex: 1,
     padding: 16,
-    borderTopColor: "#fff",
-    borderTopWidth: 1,
-    backgroundColor: "#6b2bff",
+    backgroundColor: "#171717",
   },
-  btnIcon: {
+  heading: {
+    fontSize: 38,
+    fontWeight: "bold",
+    marginVertical: 8,
+    color: "white",
+    alignSelf: "center",
+    marginBottom: 20,
+  },
+  inputref: {
+    color: "#fcfcfc",
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  input: {
+    width: "100%",
+    marginBottom: 10,
+    borderWidth: 1,
+    borderColor: "#fff",
+    borderRadius: 5,
+    padding: 15,
+    fontSize: 16,
+    color: "#fff",
+  },
+  buttondate: {
+    backgroundColor: "#fcfcfc",
+    padding: 10,
+    borderRadius: 5,
+    marginVertical: 10,
     alignItems: "center",
-    borderRadius: 20,
   },
-  logoutText: {
-    color: "white", 
+  buttonText: {
+    color: "#171717",
+    fontSize: 16,
+    marginLeft: 10,
+  },
+  button: {
+    backgroundColor: "#fde047",
+    padding: 10,
+    borderRadius: 25,
+    marginBottom: 15,
+    alignItems: "center",
+  },
+  buttonTextBook: {
+    color: "#171717",
+    fontSize: 24,
+    fontWeight: "bold",
+  },
+  backBtnContainer: {
+    alignSelf: "flex-start", // Aligns the button to the left
+    marginTop: 10,
+  },
+  backBtn: {
+    marginTop: 30,
+    padding: 10,
+    width: 45,
+    marginLeft: 4,
+    backgroundColor: "#fcfcfc",
+    borderRadius: 150,
   },
   iconContainer: {
     marginRight: 10,
     flexDirection: "row",
     alignItems: "center",
   },
-
+  customContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 16,
+  },
 });
 
 export default BookingScreen;

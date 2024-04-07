@@ -11,8 +11,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { ArrowLeftIcon } from "react-native-heroicons/solid";
 import {
   createUserWithEmailAndPassword,
-  updateCurrentUser,
   updateProfile,
+  updateCurrentUser,
 } from "firebase/auth";
 import { auth } from "../config/firebase";
 
@@ -196,7 +196,7 @@ const styles = {
     marginLeft: 5,
   },
   txtlogin: {
-    color: "#6b2bff",
+    color: "#171717",
     fontWeight: "bold",
   },
 };

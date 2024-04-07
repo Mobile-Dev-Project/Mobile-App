@@ -180,7 +180,8 @@ const styles = {
     marginTop: 10,
   },
   forgotTxt: {
-    color: "#6b2bff",
+    color: "#171717",
+    fontWeight: "bold",
     textAlign: "right",
   },
   containsignup: {
@@ -229,7 +230,7 @@ const styles = {
     marginLeft: 5,
   },
   txtlogin: {
-    color: "#6b2bff",
+    color: "#171717",
     fontWeight: "bold",
   },
 };
