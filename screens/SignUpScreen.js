@@ -9,7 +9,11 @@ import {
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ArrowLeftIcon } from "react-native-heroicons/solid";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  updateProfile,
+  updateCurrentUser,
+} from "firebase/auth";
 import { auth } from "../config/firebase";
 
 const SignUpScreen = ({ navigation }) => {
@@ -21,12 +25,23 @@ const SignUpScreen = ({ navigation }) => {
     if (!name || !email || !password) {
       alert("Please fill all the fields");
       return;
-    } else {
-      try {
-        await createUserWithEmailAndPassword(auth, email, password);
-      } catch (err) {
-        console.log("Error in SignUp", err.message);
-      }
+    }
+
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email.trim(),
+        password
+      );
+      await updateProfile(userCredential.user, {
+        displayName: name,
+      });
+      console.log(
+        "User signed up and name set: ",
+        userCredential.user.displayName
+      );
+    } catch (err) {
+      console.log("Error in SignUp", err.message);
     }
   };
 
@@ -97,7 +112,7 @@ const SignUpScreen = ({ navigation }) => {
 const styles = {
   container: {
     flex: 1,
-    backgroundColor: "#6b2bff",
+    backgroundColor: "#171717",
   },
   safeContainer: {
     display: "flex",
@@ -112,7 +127,7 @@ const styles = {
     position: "absolute",
     top: -70,
     left: 20,
-    backgroundColor: "#fde047",
+    backgroundColor: "#fcfcfc",
     padding: 10,
     borderRadius: 50,
   },
@@ -204,7 +219,7 @@ const styles = {
     marginLeft: 5,
   },
   txtlogin: {
-    color: "#6b2bff",
+    color: "#171717",
     fontWeight: "bold",
   },
 };

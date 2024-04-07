@@ -102,14 +102,14 @@ const styles = StyleSheet.create({
     color: "white",
   },
   disc: {
-    backgroundColor: "#6b2bff",
+    backgroundColor: "#171717",
     borderRadius: 10,
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-around",
   },
   innerdisc: {
-    backgroundColor: "#6b2bff",
+    backgroundColor: "#171717",
     borderRadius: 10,
     marginTop: 10,
   },

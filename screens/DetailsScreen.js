@@ -95,6 +95,7 @@ const DetailsScreen = ({ navigation, route }) => {
       </View>
       {/* price per night  and person details with new style */}
       <View style={styles.BookingInfo}>
+      
         <Text style={styles.bookinfo}>1 night, 1 adult</Text>
         <Text style={styles.price}>$150</Text>
         <Text style={styles.location}>includes taxes and charges</Text>
