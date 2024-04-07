@@ -9,7 +9,11 @@ import {
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ArrowLeftIcon } from "react-native-heroicons/solid";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  updateCurrentUser,
+  updateProfile,
+} from "firebase/auth";
 import { auth } from "../config/firebase";
 
 const SignUpScreen = ({ navigation }) => {
@@ -17,16 +21,27 @@ const SignUpScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handelSignUp = async () => {
+  const handleSignUp = async () => {
     if (!name || !email || !password) {
       alert("Please fill all the fields");
       return;
-    } else {
-      try {
-        await createUserWithEmailAndPassword(auth, email, password);
-      } catch (err) {
-        console.log("Error in SignUp", err.message);
-      }
+    }
+
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email.trim(),
+        password
+      );
+      await updateProfile(userCredential.user, {
+        displayName: name,
+      });
+      console.log(
+        "User signed up and name set: ",
+        userCredential.user.displayName
+      );
+    } catch (err) {
+      console.log("Error in SignUp", err.message);
     }
   };
 
@@ -38,7 +53,7 @@ const SignUpScreen = ({ navigation }) => {
             style={styles.arrowBtn}
             onPress={() => navigation.goBack()}
           >
-            <ArrowLeftIcon style={{ color: "#000" }} />
+            <ArrowLeftIcon style={{ color: "#171717" }} />
           </TouchableOpacity>
         </View>
       </SafeAreaView>
@@ -67,18 +82,11 @@ const SignUpScreen = ({ navigation }) => {
             onChangeText={(value) => setPassword(value)}
           />
           <View style={styles.containsignup}>
-            <TouchableOpacity onPress={handelSignUp}>
+            <TouchableOpacity onPress={handleSignUp}>
               <Text style={styles.txtsignup}>Sign Up</Text>
             </TouchableOpacity>
           </View>
         </View>
-        <Text style={styles.opt}> Or </Text>
-        <TouchableOpacity style={styles.googleSignin}>
-          <Image
-            source={require("../assets/google.jpg")}
-            style={{ width: 50, height: 50 }}
-          ></Image>
-        </TouchableOpacity>
         {/* Already have an account? */}
         <View style={styles.containlogin}>
           <Text style={styles.text}>Already have an account?</Text>
@@ -97,7 +105,7 @@ const SignUpScreen = ({ navigation }) => {
 const styles = {
   container: {
     flex: 1,
-    backgroundColor: "#6b2bff",
+    backgroundColor: "#171717",
   },
   safeContainer: {
     display: "flex",
@@ -112,7 +120,7 @@ const styles = {
     position: "absolute",
     top: -70,
     left: 20,
-    backgroundColor: "#fde047",
+    backgroundColor: "#fcfcfc",
     padding: 10,
     borderRadius: 50,
   },
@@ -174,23 +182,7 @@ const styles = {
     fontWeight: "bold",
     textAlign: "center",
   },
-  opt: {
-    textAlign: "center",
-    marginTop: 5,
-    marginBottom: 10,
-    color: "#000",
-    fontWeight: "bold",
-    fontSize: 18,
-  },
-  googleSignin: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#f5f4f2",
-    borderRadius: 8,
-    width: 60,
-    alignSelf: "center",
-  },
+
   containlogin: {
     display: "flex",
     flexDirection: "row",

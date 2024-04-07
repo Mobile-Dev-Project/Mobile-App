@@ -79,23 +79,6 @@ const DestinationItem = ({ destination }) => {
     });
   };
 
-  // Function to render star icons based on rating
-  const renderRatingStars = () => {
-    const rating = parseFloat(destination.rating); // Parse rating to float
-    const stars = [];
-    for (let i = 0; i < 5; i++) {
-      // Iterate 5 times for 5 stars
-      if (i < Math.floor(rating)) {
-        // Render filled star if index is less than rating
-        stars.push(<FontAwesome name="star" size={10} color="#f5d507" key={i} />);
-      } else {
-        // Render empty star if index is greater than or equal to rating
-        stars.push(<FontAwesome name="star-o" size={10} color="#f5d507" key={i} />);
-      }
-    }
-    return stars;
-  };
-
   return (
     <TouchableOpacity style={styles.itemContainer} onPress={handleImagePress}>
       <Image source={destination.image} style={styles.image} />
@@ -105,7 +88,6 @@ const DestinationItem = ({ destination }) => {
         <View style={styles.ratingContainer}>
           {/* Render star icons for rating */}
           <Text style={styles.rating}>{destination.rating}</Text>
-          {renderRatingStars()}
           {destination.reviews && (
             <Text style={styles.reviews}>({destination.reviews} Reviews)</Text>
           )}
@@ -162,7 +144,7 @@ const FinlandScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#6b2bff",
+    backgroundColor: "#171717",
   },
   videoContainer: {
     display: "flex",
@@ -240,7 +222,7 @@ const styles = StyleSheet.create({
     padding: 10,
     width: 45,
     marginLeft: 10,
-    backgroundColor: "#dbc00f",
+    backgroundColor: "#171717",
     borderRadius: 150,
   },
   location: {
