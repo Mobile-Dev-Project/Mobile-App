@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
   },
   subheading: {
     fontSize: 12,
-    color: "white",
+    color: "#fcfcfc",
   },
   disc: {
     backgroundColor: "#171717",
@@ -116,13 +116,13 @@ const styles = StyleSheet.create({
   countryText: {
     fontSize: 20,
     fontWeight: "bold",
-    color: "white",
+    color: "#fcfcfc",
     marginTop: 5,
     textAlign: "center",
   },
   reviews: {
     fontSize: 12,
-    color: "white",
+    color: "#fcfcfc",
     textAlign: "center",
   },
 });

@@ -103,7 +103,6 @@ const styles = StyleSheet.create({
   },
   availabilityText: {
     fontSize: 16,
-    color: "green",
     marginTop: 2,
   },
   buttonsSection: {
@@ -120,6 +119,11 @@ const styles = StyleSheet.create({
     color: "#171717",
     fontSize: 14,
     fontWeight: "bold",
+    color: "#fcfcfc",
+  },
+  flexcont: {
+    flexDirection: "row",
+    justifyContent: "space-around",
   },
 });
 

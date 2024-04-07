@@ -21,7 +21,7 @@ const SignUpScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handelSignUp = async () => {
+  const handleSignUp = async () => {
     if (!name || !email || !password) {
       alert("Please fill all the fields");
       return;
@@ -53,7 +53,7 @@ const SignUpScreen = ({ navigation }) => {
             style={styles.arrowBtn}
             onPress={() => navigation.goBack()}
           >
-            <ArrowLeftIcon style={{ color: "#000" }} />
+            <ArrowLeftIcon style={{ color: "#171717" }} />
           </TouchableOpacity>
         </View>
       </SafeAreaView>
@@ -82,18 +82,11 @@ const SignUpScreen = ({ navigation }) => {
             onChangeText={(value) => setPassword(value)}
           />
           <View style={styles.containsignup}>
-            <TouchableOpacity onPress={handelSignUp}>
+            <TouchableOpacity onPress={handleSignUp}>
               <Text style={styles.txtsignup}>Sign Up</Text>
             </TouchableOpacity>
           </View>
         </View>
-        <Text style={styles.opt}> Or </Text>
-        <TouchableOpacity style={styles.googleSignin}>
-          <Image
-            source={require("../assets/google.jpg")}
-            style={{ width: 50, height: 50 }}
-          ></Image>
-        </TouchableOpacity>
         {/* Already have an account? */}
         <View style={styles.containlogin}>
           <Text style={styles.text}>Already have an account?</Text>
@@ -189,23 +182,7 @@ const styles = {
     fontWeight: "bold",
     textAlign: "center",
   },
-  opt: {
-    textAlign: "center",
-    marginTop: 5,
-    marginBottom: 10,
-    color: "#000",
-    fontWeight: "bold",
-    fontSize: 18,
-  },
-  googleSignin: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#f5f4f2",
-    borderRadius: 8,
-    width: 60,
-    alignSelf: "center",
-  },
+
   containlogin: {
     display: "flex",
     flexDirection: "row",

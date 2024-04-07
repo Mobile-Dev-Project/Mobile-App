@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  Button,
   View,
   Text,
   StyleSheet,
@@ -32,7 +33,7 @@ const DetailsScreen = ({ navigation, route }) => {
           <AntDesign name="arrowleft" size={24} color="#fcfcfc" />
         </TouchableOpacity>
       </View>
-      <ImageSlider images={image} />
+      <ImageSlider />
       <Text style={styles.heading}>{name}</Text>
       {/* add a rating and reviews here */}
       <View style={styles.locaRate}>
@@ -91,11 +92,12 @@ const DetailsScreen = ({ navigation, route }) => {
       </View>
       <View style={styles.overview}>
         <Text style={styles.heading}>Overview</Text>
-        <Text style={styles.location}>{description}</Text>
+        <Text style={styles.location}>
+          {description}
+        </Text>
       </View>
       {/* price per night  and person details with new style */}
       <View style={styles.BookingInfo}>
-      
         <Text style={styles.bookinfo}>1 night, 1 adult</Text>
         <Text style={styles.price}>$150</Text>
         <Text style={styles.location}>includes taxes and charges</Text>
