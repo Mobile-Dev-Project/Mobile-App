@@ -53,11 +53,17 @@ const BookingScreen = ({ navigation }) => {
     }
   
     const emailRegex = /\S+@\S+\.\S+/; // Simple regex for email validation
+    // Adding validation for the name to be at least 2 characters long
+    if (!name.trim() || name.trim().length < 2) {
+      Alert.alert("Validation Error", "Name must be at least 2 characters long.");
+      return;
+    }
+
     if (!name.trim() || !guests.trim() || !roomType || !contact.trim() || !emailRegex.test(contact)) {
       Alert.alert("Validation Error", "Please fill in all fields correctly. Ensure the contact is a valid email.");
       return;
     }
-  
+    
     const numberOfGuests = parseInt(guests, 10);
     if (isNaN(numberOfGuests) || numberOfGuests <= 0) {
       Alert.alert("Validation Error", "Number of guests must be a positive number.");
