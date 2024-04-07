@@ -14,7 +14,6 @@ import DetailsScreen from "./screens/DetailsScreen";
 import ImageSlider from "./components/ImageSlider";
 import BookingScreen from "./screens/BookingScreen";
 import SelectRoomScreen from "./screens/SelectRoomScreen";
-import PasswordRecovery from "./screens/PasswordRecovery";
 
 const Stack = createNativeStackNavigator();
 
@@ -102,11 +101,6 @@ const AppNavigation = () => {
           <Stack.Screen
             name="SignUp"
             component={SignUpScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="PasswordRecovery"
-            component={PasswordRecovery}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>

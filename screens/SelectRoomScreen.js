@@ -71,7 +71,7 @@ const SelectRoomScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#171717",
+    backgroundColor: "#6b2bff",
   },
   scrollView: {
     justifyContent: "center",
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     padding: 10,
     marginLeft: 10,
-    backgroundColor: "#171717",
+    backgroundColor: "#dbc00f",
     borderRadius: 150,
   },
 });
