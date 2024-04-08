@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  Image,
 } from "react-native";
 import ImageSlider from "../components/ImageSlider";
 import { FontAwesome5 } from "@expo/vector-icons";
@@ -20,7 +21,7 @@ const DetailsScreen = ({ navigation, route }) => {
   };
 
   const { destination } = route.params;
-  const { name, location, image, rating, description, reviews } = destination;
+  const { name, location, image, rating, description, reviews, price } = destination;
 
   return (
     <ScrollView style={styles.container}>
@@ -33,7 +34,8 @@ const DetailsScreen = ({ navigation, route }) => {
           <AntDesign name="arrowleft" size={24} color="#fcfcfc" />
         </TouchableOpacity>
       </View>
-      <ImageSlider />
+      {/*how to set image slider dynamically*/}
+      <Image source={destination.image} style={styles.image} />
       <Text style={styles.heading}>{name}</Text>
       {/* add a rating and reviews here */}
       <View style={styles.locaRate}>
@@ -92,14 +94,12 @@ const DetailsScreen = ({ navigation, route }) => {
       </View>
       <View style={styles.overview}>
         <Text style={styles.heading}>Overview</Text>
-        <Text style={styles.location}>
-          {description}
-        </Text>
+        <Text style={styles.location}>{description}</Text>
       </View>
       {/* price per night  and person details with new style */}
       <View style={styles.BookingInfo}>
         <Text style={styles.bookinfo}>1 night, 1 adult</Text>
-        <Text style={styles.price}>$150</Text>
+        <Text style={styles.price}>{price}</Text>
         <Text style={styles.location}>includes taxes and charges</Text>
       </View>
       <View style={styles.BookContain}>
@@ -222,6 +222,13 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     textAlign: "center",
+  },
+  image: {
+    width: "90%",
+    height: 300,
+    borderRadius: 20,
+    marginHorizontal: 20,
+    margin: 10,
   },
 });
 
