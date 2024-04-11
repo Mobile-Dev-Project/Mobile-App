@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -10,56 +10,67 @@ import {
 } from "react-native";
 import { EvilIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { db } from "../config/firebase";
+import { collection, getDocs } from "firebase/firestore";
 
 const { width, height } = Dimensions.get("window");
 const HotelCard = () => {
-  const destination = [
-    {
-      name: "Courtyard",
-      image: require("../assets/imgs/courtyard.jpg"),
-      location: "Helsinki",
-      rate: 4.5,
-    },
-    {
-      name: "Radissa",
-      image: require("../assets/imgs/radissa.jpg"),
-      location: "Tampere",
-      rate: 4.2,
-    },
-    {
-      name: "Skiin",
-      image: require("../assets/imgs/skiin.jpg"),
-      location: "Turku",
-      rate: 4.7,
-    },
-    {
-      name: "Clarion",
-      image: require("../assets/imgs/clarion.jpg"),
-      location: "Oulu",
-      rate: 4.0,
-    },
-  ];
+  const [hotels, setHotels] = useState([]);
+
+  useEffect(() => {
+    const fetchAndCacheHotels = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, "destinations"));
+        console.log("Documents fetched:", querySnapshot.docs.length);
+
+        const storePromises = querySnapshot.docs.map((doc) => {
+          const hotelData = doc.data();
+          const hotelDataString = JSON.stringify(hotelData);
+          return AsyncStorage.setItem(doc.id, hotelDataString); // Cache each hotel
+        });
+
+        await Promise.all(storePromises);
+        console.log("All hotels stored in AsyncStorage.");
+
+        const keys = await AsyncStorage.getAllKeys();
+        const result = await AsyncStorage.multiGet(keys);
+        const retrievedHotels = result.map(([key, value]) => JSON.parse(value));
+
+        setHotels(retrievedHotels);
+      } catch (error) {
+        console.error("An error occurred:", error);
+      }
+    };
+
+    fetchAndCacheHotels();
+  }, []);
+
+  const hotelsTopRated = hotels.filter((hotel) => hotel.rating >= 4.8);
+  const sortedHotels = hotelsTopRated
+    .slice()
+    .sort((a, b) => b.rating - a.rating);
+  console.log(hotelsTopRated);
+
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>Top Rated</Text>
       <View>
         <FlatList
-          data={destination}
+          data={sortedHotels}
           horizontal
           renderItem={({ item, index }) => {
             return (
               <TouchableOpacity
-                style={{ width: width * 0.4, height: height / 3, margin: 5 }}
+                style={{ width: width * 0.4, height: height / 3, margin: 15 }}
               >
                 <Image
-                  source={item.image} // Use the current item as the image source
+                  source={{ uri: item.image }}
                   style={{
                     width: "100%",
-                    height: "80%",
+                    height: "70%",
                     borderRadius: 10,
-                    borderColor: "white",
                   }}
-                  resizeMode="cover"
                 />
                 {/* Display the name, rateing and locations of the hotel */}
                 <View style={styles.disc}>
@@ -71,7 +82,7 @@ const HotelCard = () => {
                     </Text>
                     <Text style={styles.reviews}>
                       <AntDesign name="star" size={14} color="gold" />{" "}
-                      {item.rate}
+                      {item.rating} ({item.reviews} reviews)
                     </Text>
                   </View>
                 </View>
@@ -91,30 +102,27 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   heading: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: "bold",
     color: "#f5d507",
     marginTop: 10,
-    marginBottom: 5,
+    marginBottom: 10,
   },
   subheading: {
     fontSize: 12,
     color: "#fcfcfc",
+    textAlign: "center",
   },
   disc: {
     backgroundColor: "#171717",
     borderRadius: 10,
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-around",
   },
   innerdisc: {
     backgroundColor: "#171717",
     borderRadius: 10,
-    marginTop: 10,
   },
   countryText: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: "bold",
     color: "#fcfcfc",
     marginTop: 5,

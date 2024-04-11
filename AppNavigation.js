@@ -15,6 +15,9 @@ import ImageSlider from "./components/ImageSlider";
 import BookingScreen from "./screens/BookingScreen";
 import SelectRoomScreen from "./screens/SelectRoomScreen";
 import PasswordRecovery from "./screens/PasswordRecovery";
+import HelsinkiScreen from "./screens/HelsinkiScreen";
+import TampereScreen from "./screens/TampereScreen";
+import TurkuScreen from "./screens/TurkuScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -80,6 +83,21 @@ const AppNavigation = () => {
           <Stack.Screen
             name="BookingScreen"
             component={BookingScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="HelsinkiScreen"
+            component={HelsinkiScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="TampereScreen"
+            component={TampereScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="TurkuScreen"
+            component={TurkuScreen}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>

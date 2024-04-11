@@ -132,6 +132,8 @@ const styles = StyleSheet.create({
     borderColor: "#fff",
     borderWidth: 1,
     borderRadius: 30,
+    marginTop: 20,
+    marginBottom: 20,
   },
   btnIcon: {
     alignItems: "center",
