@@ -17,6 +17,7 @@ import { addDoc, collection } from "firebase/firestore";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import { Ionicons } from "@expo/vector-icons";
+import { Picker } from '@react-native-picker/picker';
 
 const BookingScreen = ({ navigation }) => {
   const [currentUser, setCurrentUser] = useState(null);
@@ -46,20 +47,37 @@ const BookingScreen = ({ navigation }) => {
   };
 
   const handleBooking = async () => {
-    // Check if the user is logged in
     if (!currentUser) {
       Alert.alert("Error", "You must be logged in to make a booking.");
       return;
     }
+  
+    const emailRegex = /\S+@\S+\.\S+/; // Simple regex for email validation
+    // Adding validation for the name to be at least 2 characters long
+    if (!name.trim() || name.trim().length < 2) {
+      Alert.alert("Validation Error", "Name must be at least 2 characters long.");
+      return;
+    }
+
+    if (!name.trim() || !guests.trim() || !roomType || !contact.trim() || !emailRegex.test(contact)) {
+      Alert.alert("Validation Error", "Please fill in all fields correctly. Ensure the contact is a valid email.");
+      return;
+    }
+    
+    const numberOfGuests = parseInt(guests, 10);
+    if (isNaN(numberOfGuests) || numberOfGuests <= 0) {
+      Alert.alert("Validation Error", "Number of guests must be a positive number.");
+      return;
+    }
+  
     const totalPrice = calculatePrice();
-    // Attempt to add a new booking to Firestore
     try {
       await addDoc(collection(db, "bookings"), {
         userId: currentUser.uid,
         name,
         checkInDate: checkInDate.toISOString().split("T")[0],
         checkOutDate: checkOutDate.toISOString().split("T")[0],
-        guests: parseInt(guests, 10),
+        guests: numberOfGuests,
         roomType,
         specialRequests,
         contact,
@@ -71,7 +89,7 @@ const BookingScreen = ({ navigation }) => {
       Alert.alert("Error", "Booking failed.");
     }
   };
-
+  
   // Calculate the total price based on the number of nights
   const calculatePrice = () => {
     const diffTime = Math.abs(checkOutDate - checkInDate);
@@ -123,14 +141,19 @@ const BookingScreen = ({ navigation }) => {
           onChangeText={setGuests}
         />
 
-        <Text style={styles.inputref}>Room Type</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="e.g., Single, Double, Suite"
-          placeholderTextColor="#575757"
-          value={roomType}
-          onChangeText={setRoomType}
-        />
+<Text style={styles.inputref}>Room Type</Text>
+<Picker
+  selectedValue={roomType}
+  style={styles.picker}
+  dropdownIconColor={"#fff"}
+  onValueChange={(itemValue, itemIndex) => setRoomType(itemValue)}
+>
+  <Picker.Item label="Select Room Type" value="" />
+  <Picker.Item label="Single" value="Single" />
+  <Picker.Item label="Double" value="Double" />
+  <Picker.Item label="Suite" value="Suite" />
+</Picker>
+
 
         <Text style={styles.inputref}>Contact</Text>
         <TextInput
@@ -272,6 +295,15 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     marginBottom: 16,
   },
+  picker: {
+    height: 50,
+    width: '100%',
+    color: '#fff',
+    backgroundColor: '#333',
+    marginBottom: 10,
+    borderRadius: 5,
+  },
+  
 });
 
 export default BookingScreen;
