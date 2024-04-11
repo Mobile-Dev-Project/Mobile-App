@@ -20,7 +20,7 @@ import HotelCard from "../components/HotelCard";
 const FinlandScreen = React.lazy(() => import("./FinlandScreen"));
 
 const HomeScreen = ({ navigation }) => {
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -49,13 +49,10 @@ const HomeScreen = ({ navigation }) => {
             <Ionicons name="search" size={34} color="#fcfcfc" />
           </TouchableOpacity>
         </View>
-        <Text style={styles.inputref}>
-          Welcome{" "}
-          <Text style={{ color: "#fde047", fontStyle: "italic" }}>
-            {currentUser?.displayName}
+          <Text style={styles.inputref}>
+            Welcome:{auth.currentUser.displayName}
           </Text>
-        </Text>
-        <Places />
+          <Places />
         <RecommendCard
           imageSources={[require("../assets/imgs/centaa.jpg")]}
           heading="Centa Village"

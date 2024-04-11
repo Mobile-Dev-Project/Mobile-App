@@ -6,7 +6,7 @@ const WelcomeScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.cover}>
-        <Text style={styles.txthead}>Welcome!</Text>
+        <Text style={styles.txthead}>BookaStay!</Text>
 
         <View style={styles.cotainImg}>
           <Image

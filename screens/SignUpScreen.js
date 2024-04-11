@@ -33,13 +33,17 @@ const SignUpScreen = ({ navigation }) => {
         email.trim(),
         password
       );
-      await updateProfile(userCredential.user, {
-        displayName: name,
-      });
-      console.log(
-        "User signed up and name set: ",
-        userCredential.user.displayName
-      );
+      if (userCredential.user) {
+        await updateProfile(userCredential.user, {
+          displayName: name,
+        });
+        console.log(
+          "User signed up and name set: ",
+          userCredential.user.displayName
+        );
+      } else {
+        console.log("User credential does not contain user information");
+      }
     } catch (err) {
       console.log("Error in SignUp", err.message);
     }
