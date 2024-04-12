@@ -11,53 +11,64 @@ import { useNavigation } from "@react-navigation/native";
 const Places = () => {
   const navigation = useNavigation();
 
-  const handleImagePress = () => {
+  const handelHelsinkiPress = () => {
     // Navigate to the desired screen when the image is pressed
-    navigation.navigate("FinlandScreen");
+    navigation.navigate("HelsinkiScreen");
   };
+
+  const handelTamperePress = () => {
+    // Navigate to the desired screen when the image is pressed
+    navigation.navigate("TampereScreen");
+  };
+
+  const handelTurkuPress = () => {
+    // Navigate to the desired screen when the image is pressed
+    navigation.navigate("TurkuScreen");
+  };
+
   return (
     <View style={styles.content}>
       <Text style={styles.heading}>Places</Text>
       <View style={styles.countryContainer}>
         <TouchableOpacity
-          onPress={handleImagePress}
+          onPress={handelHelsinkiPress}
           style={[styles.countryBox, { marginRight: 10 }]}
         >
           <Image
             source={require("../assets/imgs/centaa.jpg")}
             style={styles.countryImage}
           />
-          <Text style={styles.countryText}>Centa Village</Text>
+          <Text style={styles.countryText}>Helsinki</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={handleImagePress}
+          onPress={handelTamperePress}
           style={[styles.countryBox, { marginRight: 10 }]}
         >
           <Image
             source={require("../assets/imgs/helsinki.jpg")}
             style={styles.countryImage}
           />
-          <Text style={styles.countryText}>Helsinki</Text>
+          <Text style={styles.countryText}>Tampere</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={handleImagePress}
+          onPress={handelTurkuPress}
           style={[styles.countryBox, { marginRight: 10 }]}
         >
           <Image
             source={require("../assets/imgs/Oulu.jpg")}
             style={styles.countryImage}
           />
-          <Text style={styles.countryText}>Oulu</Text>
+          <Text style={styles.countryText}>Turku</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={handleImagePress}
+          onPress={handelTurkuPress}
           style={[styles.countryBox, { marginRight: 10 }]}
         >
           <Image
             source={require("../assets/imgs/Tempere.jpg")}
             style={styles.countryImage}
           />
-          <Text style={styles.countryText}>Tempere</Text>
+          <Text style={styles.countryText}>Rovaniemi</Text>
         </TouchableOpacity>
       </View>
     </View>

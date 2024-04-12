@@ -17,7 +17,7 @@ import { collection, getDocs } from "firebase/firestore";
 const HomeScreen = React.lazy(() => import("./HomeScreen"));
 
 // Main FinlandScreen component
-const HelsinkiScreen = ({ navigation }) => {
+const TampereScreen = ({ navigation }) => {
   const [hotels, setHotels] = useState([]);
 
   useEffect(() => {
@@ -38,7 +38,6 @@ const HelsinkiScreen = ({ navigation }) => {
         const keys = await AsyncStorage.getAllKeys();
         const result = await AsyncStorage.multiGet(keys);
         const retrievedHotels = result.map(([key, value]) => JSON.parse(value));
-        console.log("Hotels retrieved and parsed:", retrievedHotels);
 
         setHotels(retrievedHotels);
       } catch (error) {
@@ -49,10 +48,10 @@ const HelsinkiScreen = ({ navigation }) => {
     fetchAndCacheHotels();
   }, []);
 
-  const handleImagePress = () => {
+  const handleImagePress = (hotel) => {
     console.log("Pressed");
     navigation.navigate("DetailsScreen", {
-      destinations: destinations,
+      hotel: hotel,
     });
   };
   return (
@@ -80,35 +79,39 @@ const HelsinkiScreen = ({ navigation }) => {
         </View>
       </View>
       <View style={styles.content}>
-        <Text style={styles.title}>Finland</Text>
+        <Text style={styles.title}>Tampere</Text>
         <Text style={styles.description}>
-          Finland is known for its stunning natural landscapes, vibrant cities,
-          and rich cultural heritage. Explore the beautiful lakes, enjoy the
-          Northern Lights, and visit Santa Claus Village.
+          Embrace the dynamic city life. Immerse yourself in museums, theatres,
+          and a thriving music scene, all surrounded by stunning lakes and
+          national parks perfect for outdoor adventures.{" "}
         </Text>
         <Text style={styles.subtitle}>Popular Destinations</Text>
         {/* Map through destinations array to render DestinationItem components */}
-        {hotels.map((hotel, index) => (
-          <TouchableOpacity
-            key={index}
-            style={styles.itemContainer}
-            onPress={handleImagePress}
-          >
-            <Image source={{ uri: hotel.image }} style={styles.image} />
-            <View style={styles.infoContainer}>
-              <Text style={styles.title}>{hotel.name}</Text>
-              <Text style={styles.location}>{hotel.location}</Text>
-              <View style={styles.ratingContainer}>
-                {/* Render star icons for rating */}
-                <FontAwesome name="star" size={16} color="#f5d507" />
-                <Text style={styles.rating}>{hotel.rating}</Text>
-                {hotel.reviews && (
-                  <Text style={styles.reviews}>({hotel.reviews} Reviews)</Text>
-                )}
+        {hotels
+          .filter((hotel) => hotel.location == "Tampere")
+          .map((hotel, index) => (
+            <TouchableOpacity
+              key={index}
+              style={styles.itemContainer}
+              onPress={() => handleImagePress(hotel)}
+            >
+              <Image source={{ uri: hotel.image }} style={styles.image} />
+              <View style={styles.infoContainer}>
+                <Text style={styles.title}>{hotel.name}</Text>
+                <Text style={styles.location}>{hotel.location}</Text>
+                <View style={styles.ratingContainer}>
+                  {/* Render star icons for rating */}
+                  <FontAwesome name="star" size={16} color="#f5d507" />
+                  <Text style={styles.rating}>{hotel.rating}</Text>
+                  {hotel.reviews && (
+                    <Text style={styles.reviews}>
+                      ({hotel.reviews} Reviews)
+                    </Text>
+                  )}
+                </View>
               </View>
-            </View>
-          </TouchableOpacity>
-        ))}
+            </TouchableOpacity>
+          ))}
       </View>
     </ScrollView>
   );
@@ -205,4 +208,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HelsinkiScreen;
+export default TampereScreen;

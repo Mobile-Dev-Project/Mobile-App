@@ -19,8 +19,10 @@ const DetailsScreen = ({ navigation, route }) => {
     navigation.navigate("SelectRoomScreen"); // Navigate to BookingScreen when Book Now is pressed
   };
 
-  const { destination } = route.params;
-  const { name, location, image, rating, description, reviews } = destination;
+  const { hotel } = route.params;
+  const { name, location, rating, description, reviews } = hotel;
+
+  // Now you can use these properties in your JSX to display the details
 
   return (
     <ScrollView style={styles.container}>
@@ -44,7 +46,7 @@ const DetailsScreen = ({ navigation, route }) => {
         <View style={styles.ratecont}>
           <AntDesign name="star" size={16} color="#fcfcfc" />
           <Text style={styles.rate}>{rating}</Text>
-          <Text style={styles.review}>({reviews})</Text>
+          <Text style={styles.review}> ({reviews} reviews)</Text>
         </View>
       </View>
       {/* guestes, bed and room details */}
@@ -92,9 +94,7 @@ const DetailsScreen = ({ navigation, route }) => {
       </View>
       <View style={styles.overview}>
         <Text style={styles.heading}>Overview</Text>
-        <Text style={styles.location}>
-          {description}
-        </Text>
+        <Text style={styles.location}>{description}</Text>
       </View>
       {/* price per night  and person details with new style */}
       <View style={styles.BookingInfo}>

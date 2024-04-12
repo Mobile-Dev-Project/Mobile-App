@@ -38,7 +38,6 @@ const HelsinkiScreen = ({ navigation }) => {
         const keys = await AsyncStorage.getAllKeys();
         const result = await AsyncStorage.multiGet(keys);
         const retrievedHotels = result.map(([key, value]) => JSON.parse(value));
-        console.log("Hotels retrieved and parsed:", retrievedHotels);
 
         setHotels(retrievedHotels);
       } catch (error) {
@@ -49,10 +48,10 @@ const HelsinkiScreen = ({ navigation }) => {
     fetchAndCacheHotels();
   }, []);
 
-  const handleImagePress = () => {
+  const handleImagePress = (hotel) => {
     console.log("Pressed");
     navigation.navigate("DetailsScreen", {
-      destinations: destinations,
+      hotel: hotel,
     });
   };
   return (
@@ -80,35 +79,39 @@ const HelsinkiScreen = ({ navigation }) => {
         </View>
       </View>
       <View style={styles.content}>
-        <Text style={styles.title}>Finland</Text>
+        <Text style={styles.title}>Turku</Text>
         <Text style={styles.description}>
-          Finland is known for its stunning natural landscapes, vibrant cities,
-          and rich cultural heritage. Explore the beautiful lakes, enjoy the
-          Northern Lights, and visit Santa Claus Village.
+          History whispers on every corner. Explore Finland's oldest city, with
+          its medieval castle and charming old town, then delve into a thriving
+          arts scene and lively markets.
         </Text>
         <Text style={styles.subtitle}>Popular Destinations</Text>
         {/* Map through destinations array to render DestinationItem components */}
-        {hotels.map((hotel, index) => (
-          <TouchableOpacity
-            key={index}
-            style={styles.itemContainer}
-            onPress={handleImagePress}
-          >
-            <Image source={{ uri: hotel.image }} style={styles.image} />
-            <View style={styles.infoContainer}>
-              <Text style={styles.title}>{hotel.name}</Text>
-              <Text style={styles.location}>{hotel.location}</Text>
-              <View style={styles.ratingContainer}>
-                {/* Render star icons for rating */}
-                <FontAwesome name="star" size={16} color="#f5d507" />
-                <Text style={styles.rating}>{hotel.rating}</Text>
-                {hotel.reviews && (
-                  <Text style={styles.reviews}>({hotel.reviews} Reviews)</Text>
-                )}
+        {hotels
+          .filter((hotel) => hotel.location == "Turku")
+          .map((hotel, index) => (
+            <TouchableOpacity
+              key={index}
+              style={styles.itemContainer}
+              onPress={() => handleImagePress(hotel)}
+            >
+              <Image source={{ uri: hotel.image }} style={styles.image} />
+              <View style={styles.infoContainer}>
+                <Text style={styles.title}>{hotel.name}</Text>
+                <Text style={styles.location}>{hotel.location}</Text>
+                <View style={styles.ratingContainer}>
+                  {/* Render star icons for rating */}
+                  <FontAwesome name="star" size={16} color="#f5d507" />
+                  <Text style={styles.rating}>{hotel.rating}</Text>
+                  {hotel.reviews && (
+                    <Text style={styles.reviews}>
+                      ({hotel.reviews} Reviews)
+                    </Text>
+                  )}
+                </View>
               </View>
-            </View>
-          </TouchableOpacity>
-        ))}
+            </TouchableOpacity>
+          ))}
       </View>
     </ScrollView>
   );
