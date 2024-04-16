@@ -18,6 +18,7 @@ import PasswordRecovery from "./screens/PasswordRecovery";
 import HelsinkiScreen from "./screens/HelsinkiScreen";
 import TampereScreen from "./screens/TampereScreen";
 import TurkuScreen from "./screens/TurkuScreen";
+import Booked from "./screens/Booked";
 
 const Stack = createNativeStackNavigator();
 
@@ -98,6 +99,11 @@ const AppNavigation = () => {
           <Stack.Screen
             name="TurkuScreen"
             component={TurkuScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Booked"
+            component={Booked}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>
