@@ -13,16 +13,17 @@ import { AntDesign } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { db } from "../config/firebase";
 import { collection, getDocs } from "firebase/firestore";
+import { useNavigation } from "@react-navigation/native";
 
 const { width, height } = Dimensions.get("window");
 const HotelCard = () => {
+  const navigation = useNavigation();
   const [hotels, setHotels] = useState([]);
 
   useEffect(() => {
     const fetchAndCacheHotels = async () => {
       try {
         const querySnapshot = await getDocs(collection(db, "destinations"));
-        console.log("Documents fetched:", querySnapshot.docs.length);
 
         const storePromises = querySnapshot.docs.map((doc) => {
           const hotelData = doc.data();
@@ -31,7 +32,6 @@ const HotelCard = () => {
         });
 
         await Promise.all(storePromises);
-        console.log("All hotels stored in AsyncStorage.");
 
         const keys = await AsyncStorage.getAllKeys();
         const result = await AsyncStorage.multiGet(keys);
@@ -50,7 +50,13 @@ const HotelCard = () => {
   const sortedHotels = hotelsTopRated
     .slice()
     .sort((a, b) => b.rating - a.rating);
-  console.log(hotelsTopRated);
+
+  const handleImagePress = (hotel) => {
+    console.log("Pressed", hotels);
+    navigation.navigate("DetailsScreen", {
+      hotel: hotel,
+    });
+  };
 
   return (
     <View style={styles.container}>
@@ -63,6 +69,7 @@ const HotelCard = () => {
             return (
               <TouchableOpacity
                 style={{ width: width * 0.4, height: height / 3, margin: 15 }}
+                onPress={() => handleImagePress(item)}
               >
                 <Image
                   source={{ uri: item.image }}

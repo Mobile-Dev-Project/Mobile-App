@@ -10,7 +10,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../config/firebase";
-
+import { AntDesign } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import Places from "../components/Places";
@@ -71,6 +71,16 @@ const HomeScreen = ({ navigation }) => {
             >
               <FontAwesome5 name="hotel" size={24} color="white" />
               <Text style={{ color: "white" }}>Hotels</Text>
+            </TouchableOpacity>
+          </View>
+          {/* Add Booked.js here */}
+          <View style={styles.iconContainer}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Booked")}
+              style={styles.btnIcon}
+            >
+              <AntDesign name="key" size={24} color="white" />
+              <Text style={{ color: "white" }}>Booked</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.iconContainer}>

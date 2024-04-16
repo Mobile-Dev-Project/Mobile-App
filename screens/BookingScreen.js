@@ -13,11 +13,12 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { FontAwesome5 } from "@expo/vector-icons";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { db, auth } from "../config/firebase"; // Adjust based on your actual path
-import { addDoc, collection } from "firebase/firestore";
-import { onAuthStateChanged, signOut } from "firebase/auth";
+import { addDoc, collection, getDocs } from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import { Ionicons } from "@expo/vector-icons";
-import { Picker } from '@react-native-picker/picker';
+import { Picker } from "@react-native-picker/picker";
+import {} from "firebase/firestore";
 
 const BookingScreen = ({ navigation }) => {
   const [currentUser, setCurrentUser] = useState(null);
@@ -27,11 +28,14 @@ const BookingScreen = ({ navigation }) => {
   const [roomType, setRoomType] = useState("");
   const [specialRequests, setSpecialRequests] = useState("");
   const [contact, setContact] = useState("");
+  const [hotelName, setHotelName] = useState("");
   // State for managing date picker visibility and selected dates
   const [checkInDate, setCheckInDate] = useState(new Date());
   const [checkOutDate, setCheckOutDate] = useState(new Date());
   const [isCheckInPickerShow, setCheckInPickerShow] = useState(false);
   const [isCheckOutPickerShow, setCheckOutPickerShow] = useState(false);
+  const [hotels, setHotels] = useState([]);
+  const [selectedHotel, setSelectedHotel] = useState("");
 
   // useEffect hook for auth state changes
   useEffect(() => {
@@ -41,35 +45,57 @@ const BookingScreen = ({ navigation }) => {
     return () => unsubscribe();
   }, []);
 
-  // Handle logout
-  const handleLogout = async () => {
-    await signOut(auth);
-  };
+  useEffect(() => {
+    const fetchHotels = async () => {
+      const hotelCollection = collection(db, "destinations"); // replace 'hotels' with your actual collection name
+      const hotelSnapshot = await getDocs(hotelCollection);
+      const hotelList = hotelSnapshot.docs.map((doc) => doc.data());
+      console.log("Fetched hotels:", hotelList);
+      setHotels(hotelList);
+    };
+
+    fetchHotels();
+  }, []);
 
   const handleBooking = async () => {
     if (!currentUser) {
       Alert.alert("Error", "You must be logged in to make a booking.");
       return;
     }
-  
+
     const emailRegex = /\S+@\S+\.\S+/; // Simple regex for email validation
     // Adding validation for the name to be at least 2 characters long
     if (!name.trim() || name.trim().length < 2) {
-      Alert.alert("Validation Error", "Name must be at least 2 characters long.");
+      Alert.alert(
+        "Validation Error",
+        "Name must be at least 2 characters long."
+      );
       return;
     }
 
-    if (!name.trim() || !guests.trim() || !roomType || !contact.trim() || !emailRegex.test(contact)) {
-      Alert.alert("Validation Error", "Please fill in all fields correctly. Ensure the contact is a valid email.");
+    if (
+      !name.trim() ||
+      !guests.trim() ||
+      !roomType ||
+      !contact.trim() ||
+      !emailRegex.test(contact)
+    ) {
+      Alert.alert(
+        "Validation Error",
+        "Please fill in all fields correctly. Ensure the contact is a valid email."
+      );
       return;
     }
-    
+
     const numberOfGuests = parseInt(guests, 10);
     if (isNaN(numberOfGuests) || numberOfGuests <= 0) {
-      Alert.alert("Validation Error", "Number of guests must be a positive number.");
+      Alert.alert(
+        "Validation Error",
+        "Number of guests must be a positive number."
+      );
       return;
     }
-  
+
     const totalPrice = calculatePrice();
     try {
       await addDoc(collection(db, "bookings"), {
@@ -82,6 +108,8 @@ const BookingScreen = ({ navigation }) => {
         specialRequests,
         contact,
         totalPrice,
+        hotelName: selectedHotel,
+        createdAt: new Date().toISOString(),
       });
       Alert.alert("Success", "Booking successful.");
     } catch (error) {
@@ -89,7 +117,7 @@ const BookingScreen = ({ navigation }) => {
       Alert.alert("Error", "Booking failed.");
     }
   };
-  
+
   // Calculate the total price based on the number of nights
   const calculatePrice = () => {
     const diffTime = Math.abs(checkOutDate - checkInDate);
@@ -131,6 +159,17 @@ const BookingScreen = ({ navigation }) => {
           onChangeText={setName}
         />
 
+        <Text style={styles.inputref}>Hotel Name</Text>
+        <Picker
+          style={styles.picker}
+          selectedValue={selectedHotel}
+          onValueChange={(itemValue, itemIndex) => setSelectedHotel(itemValue)}
+        >
+          {hotels.map((hotel, index) => (
+            <Picker.Item key={index} label={hotel.name} value={hotel.name} />
+          ))}
+        </Picker>
+
         <Text style={styles.inputref}>Number of Guests</Text>
         <TextInput
           style={styles.input}
@@ -141,19 +180,18 @@ const BookingScreen = ({ navigation }) => {
           onChangeText={setGuests}
         />
 
-<Text style={styles.inputref}>Room Type</Text>
-<Picker
-  selectedValue={roomType}
-  style={styles.picker}
-  dropdownIconColor={"#fff"}
-  onValueChange={(itemValue, itemIndex) => setRoomType(itemValue)}
->
-  <Picker.Item label="Select Room Type" value="" />
-  <Picker.Item label="Single" value="Single" />
-  <Picker.Item label="Double" value="Double" />
-  <Picker.Item label="Suite" value="Suite" />
-</Picker>
-
+        <Text style={styles.inputref}>Room Type</Text>
+        <Picker
+          selectedValue={roomType}
+          style={styles.picker}
+          dropdownIconColor={"#fff"}
+          onValueChange={(itemValue, itemIndex) => setRoomType(itemValue)}
+        >
+          <Picker.Item label="Select Room Type" value="" />
+          <Picker.Item label="Single" value="Single" />
+          <Picker.Item label="Double" value="Double" />
+          <Picker.Item label="Suite" value="Suite" />
+        </Picker>
 
         <Text style={styles.inputref}>Contact</Text>
         <TextInput
@@ -297,13 +335,12 @@ const styles = StyleSheet.create({
   },
   picker: {
     height: 50,
-    width: '100%',
-    color: '#fff',
-    backgroundColor: '#333',
+    width: "100%",
+    color: "#fff",
+    backgroundColor: "#333",
     marginBottom: 10,
     borderRadius: 5,
   },
-  
 });
 
 export default BookingScreen;

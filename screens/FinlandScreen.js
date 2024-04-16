@@ -24,7 +24,6 @@ const HelsinkiScreen = ({ navigation }) => {
     const fetchAndCacheHotels = async () => {
       try {
         const querySnapshot = await getDocs(collection(db, "destinations"));
-        console.log("Documents fetched:", querySnapshot.docs.length);
 
         const storePromises = querySnapshot.docs.map((doc) => {
           const hotelData = doc.data();
@@ -33,12 +32,10 @@ const HelsinkiScreen = ({ navigation }) => {
         });
 
         await Promise.all(storePromises);
-        console.log("All hotels stored in AsyncStorage.");
 
         const keys = await AsyncStorage.getAllKeys();
         const result = await AsyncStorage.multiGet(keys);
         const retrievedHotels = result.map(([key, value]) => JSON.parse(value));
-        console.log("Hotels retrieved and parsed:", retrievedHotels);
 
         setHotels(retrievedHotels);
       } catch (error) {
