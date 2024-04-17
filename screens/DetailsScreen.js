@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  Image,
 } from "react-native";
 import ImageSlider from "../components/ImageSlider";
 import { FontAwesome5 } from "@expo/vector-icons";
@@ -20,7 +21,7 @@ const DetailsScreen = ({ navigation, route }) => {
   };
 
   const { hotel } = route.params;
-  const { name, location, rating, description, reviews } = hotel;
+  const { name, location, rating, description, reviews, image } = hotel;
 
   // Now you can use these properties in your JSX to display the details
 
@@ -35,7 +36,7 @@ const DetailsScreen = ({ navigation, route }) => {
           <AntDesign name="arrowleft" size={24} color="#fcfcfc" />
         </TouchableOpacity>
       </View>
-      <ImageSlider />
+      <Image source={{ uri: hotel.image }} style={styles.image} />
       <Text style={styles.heading}>{name}</Text>
       {/* add a rating and reviews here */}
       <View style={styles.locaRate}>
@@ -222,6 +223,13 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     textAlign: "center",
+  },
+  image: {
+    width: '90%',
+    height: 250,
+    marginTop: 25,
+    borderRadius: 10,
+    alignSelf: "center",
   },
 });
 
