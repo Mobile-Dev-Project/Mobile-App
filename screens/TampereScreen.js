@@ -83,7 +83,7 @@ const TampereScreen = ({ navigation }) => {
         <Text style={styles.description}>
           Embrace the dynamic city life. Immerse yourself in museums, theatres,
           and a thriving music scene, all surrounded by stunning lakes and
-          national parks perfect for outdoor adventures.{" "}
+          national parks perfect for outdoor adventures.
         </Text>
         <Text style={styles.subtitle}>Popular Destinations</Text>
         {/* Map through destinations array to render DestinationItem components */}

@@ -46,10 +46,10 @@ const HelsinkiScreen = ({ navigation }) => {
     fetchAndCacheHotels();
   }, []);
 
-  const handleImagePress = () => {
+  const handleImagePress = (hotel) => {
     console.log("Pressed");
     navigation.navigate("DetailsScreen", {
-      destinations: destinations,
+      hotel: hotel,
     });
   };
   return (
@@ -91,7 +91,7 @@ const HelsinkiScreen = ({ navigation }) => {
             <TouchableOpacity
               key={index}
               style={styles.itemContainer}
-              onPress={handleImagePress}
+              onPress={() => handleImagePress(hotel)}
             >
               <Image source={{ uri: hotel.image }} style={styles.image} />
               <View style={styles.infoContainer}>
