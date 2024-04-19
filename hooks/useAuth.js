@@ -8,7 +8,6 @@ const useAuth = () => {
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, async (user) => {
-      console.log("user", user);
       if (user) {
         setUser(user);
         await AsyncStorage.setItem("user", JSON.stringify(user));

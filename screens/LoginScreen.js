@@ -20,39 +20,24 @@ import { auth } from "../config/firebase";
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  // const auth = getAuth();
-  // signInWithPopup(auth, provider)
-  //   .then((result) => {
-  //     // This gives you a Google Access Token. You can use it to access the Google API.
-  //     const credential = GoogleAuthProvider.credentialFromResult(result);
-  //     const token = credential.accessToken;
-  //     // The signed-in user info.
-  //     const user = result.user;
-  //     // IdP data available using getAdditionalUserInfo(result)
-  //     // ...
-  //   })
-  //   .catch((error) => {
-  //     // Handle Errors here.
-  //     const errorCode = error.code;
-  //     const errorMessage = error.message;
-  //     // The email of the user's account used.
-  //     const email = error.customData.email;
-  //     // The AuthCredential type that was used.
-  //     const credential = GoogleAuthProvider.credentialFromError(error);
-  //     // ...
-  //   });
+  const emailRegex = /\S+@\S+\.\S+/; // Simple regex for email validation
 
   const handleLogin = async () => {
     if (!email || !password) {
       alert("Please fill all the fields");
       return;
-    } else {
-      try {
-        await signInWithEmailAndPassword(auth, email, password);
-      } catch (err) {
-        console.log("Error in Login", err.message);
-      }
+    }
+    if (!emailRegex.test(email)) {
+      alert("Please enter a valid email address");
+      return;
+    }
+
+    try {
+      // check if the respnse is ok or not if it is not say invalid email or password
+      await signInWithEmailAndPassword(auth, email, password);
+    } catch (err) {
+      console.log("Error in Login", err.message);
+      alert("Invalid email or password");
     }
   };
 

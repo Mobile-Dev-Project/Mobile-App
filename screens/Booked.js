@@ -44,7 +44,6 @@ const Booked = ({ navigation }) => {
         const result = await AsyncStorage.multiGet(keys);
         const retrievedrooms = result.map(([key, value]) => {
           const room = JSON.parse(value);
-          // console.log("Retrieved room from AsyncStorage:", room);
           return room;
         });
 
@@ -87,6 +86,7 @@ const Booked = ({ navigation }) => {
           {currentUser?.displayName}'s Reservations
         </Text>
         {/* Map through booked rooms to render room information */}
+
         {rooms
           .filter(
             (hotel) =>
