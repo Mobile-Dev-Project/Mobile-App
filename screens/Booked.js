@@ -87,6 +87,11 @@ const Booked = ({ navigation }) => {
         </Text>
         {/* Map through booked rooms to render room information */}
 
+        {rooms.forEach((hotel) => {
+          if (hotel.contact === currentUser.email) {
+            console.log(hotel.name);
+          }
+        })}
         {rooms
           .filter(
             (hotel) =>
