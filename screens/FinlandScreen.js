@@ -85,27 +85,31 @@ const HelsinkiScreen = ({ navigation }) => {
         </Text>
         <Text style={styles.subtitle}>Popular Destinations</Text>
         {/* Map through destinations array to render DestinationItem components */}
-        {hotels.map((hotel, index) => (
-          <TouchableOpacity
-            key={index}
-            style={styles.itemContainer}
-            onPress={handleImagePress}
-          >
-            <Image source={{ uri: hotel.image }} style={styles.image} />
-            <View style={styles.infoContainer}>
-              <Text style={styles.title}>{hotel.name}</Text>
-              <Text style={styles.location}>{hotel.location}</Text>
-              <View style={styles.ratingContainer}>
-                {/* Render star icons for rating */}
-                <FontAwesome name="star" size={16} color="#f5d507" />
-                <Text style={styles.rating}>{hotel.rating}</Text>
-                {hotel.reviews && (
-                  <Text style={styles.reviews}>({hotel.reviews} Reviews)</Text>
-                )}
+        {hotels
+          .filter((hotel) => hotel.location)
+          .map((hotel, index) => (
+            <TouchableOpacity
+              key={index}
+              style={styles.itemContainer}
+              onPress={handleImagePress}
+            >
+              <Image source={{ uri: hotel.image }} style={styles.image} />
+              <View style={styles.infoContainer}>
+                <Text style={styles.title}>{hotel.name}</Text>
+                <Text style={styles.location}>{hotel.location}</Text>
+                <View style={styles.ratingContainer}>
+                  {/* Render star icons for rating */}
+                  <FontAwesome name="star" size={16} color="#f5d507" />
+                  <Text style={styles.rating}>{hotel.rating}</Text>
+                  {hotel.reviews && (
+                    <Text style={styles.reviews}>
+                      ({hotel.reviews} Reviews)
+                    </Text>
+                  )}
+                </View>
               </View>
-            </View>
-          </TouchableOpacity>
-        ))}
+            </TouchableOpacity>
+          ))}
       </View>
     </ScrollView>
   );

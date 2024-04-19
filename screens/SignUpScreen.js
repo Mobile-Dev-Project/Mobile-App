@@ -20,10 +20,16 @@ const SignUpScreen = ({ navigation }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const emailRegex = /\S+@\S+\.\S+/; // Simple regex for email validation
 
   const handleSignUp = async () => {
     if (!name || !email || !password) {
       alert("Please fill all the fields");
+      return;
+    }
+
+    if (!emailRegex.test(email)) {
+      alert("Please enter a valid email address");
       return;
     }
 
@@ -36,10 +42,6 @@ const SignUpScreen = ({ navigation }) => {
       await updateProfile(userCredential.user, {
         displayName: name,
       });
-      console.log(
-        "User signed up and name set: ",
-        userCredential.user.displayName
-      );
     } catch (err) {
       console.log("Error in SignUp", err.message);
     }
