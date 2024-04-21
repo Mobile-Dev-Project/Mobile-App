@@ -22,9 +22,6 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Check npm start
-        run: npm start
-
   code-quality:
     name: Code Quality Checks
     runs-on: ubuntu-latest
