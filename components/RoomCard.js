@@ -43,14 +43,9 @@ const RoomCard = ({
           </View>
         )}
       </View>
-      <Text style={styles.availabilityText}>Availability: {availability}</Text>
       {/* Selection buttons */}
       <View style={styles.buttonsSection}>
         <Text style={styles.priceText}>${price}/night</Text>
-        {/* Add your selection button here */}
-        <TouchableOpacity style={styles.selectButton} onPress={handleBooking}>
-          <Text style={styles.buttonText}>Select</Text>
-        </TouchableOpacity>
       </View>
     </View>
   );

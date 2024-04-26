@@ -47,7 +47,6 @@ const HelsinkiScreen = ({ navigation }) => {
   }, []);
 
   const handleImagePress = (hotel) => {
-    console.log("Pressed", hotels);
     navigation.navigate("DetailsScreen", {
       hotel: hotel,
     });

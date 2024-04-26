@@ -36,19 +36,6 @@ const HomeScreen = ({ navigation }) => {
   return (
     <ScrollView>
       <SafeAreaView style={styles.container}>
-        <View style={styles.header}>
-          <TextInput
-            style={styles.searchInput}
-            placeholder="Search"
-            placeholderTextColor="#A0A0A0"
-          />
-          <TouchableOpacity
-            onPress={() => navigation.navigate("FindHotelsScreen")}
-            style={styles.btnsearch}
-          >
-            <Ionicons name="search" size={34} color="#fcfcfc" />
-          </TouchableOpacity>
-        </View>
         <Text style={styles.inputref}>
           Welcome{" "}
           <Text style={{ color: "#fde047", fontStyle: "italic" }}>

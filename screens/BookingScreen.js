@@ -50,7 +50,6 @@ const BookingScreen = ({ navigation }) => {
       const hotelCollection = collection(db, "destinations"); // replace 'hotels' with your actual collection name
       const hotelSnapshot = await getDocs(hotelCollection);
       const hotelList = hotelSnapshot.docs.map((doc) => doc.data());
-      console.log("Fetched hotels:", hotelList);
       setHotels(hotelList);
     };
 
@@ -112,6 +111,7 @@ const BookingScreen = ({ navigation }) => {
         createdAt: new Date().toISOString(),
       });
       Alert.alert("Success", "Booking successful.");
+      navigation.navigate("BookingConfirm");
     } catch (error) {
       console.error(error);
       Alert.alert("Error", "Booking failed.");
