@@ -47,11 +47,11 @@ const HelsinkiScreen = ({ navigation }) => {
   }, []);
 
   const handleImagePress = (hotel) => {
-    console.log("Pressed");
     navigation.navigate("DetailsScreen", {
       hotel: hotel,
     });
   };
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.videoContainer}>

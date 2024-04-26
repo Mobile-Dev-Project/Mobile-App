@@ -52,7 +52,6 @@ const HotelCard = () => {
     .sort((a, b) => b.rating - a.rating);
 
   const handleImagePress = (hotel) => {
-    console.log("Pressed", hotels);
     navigation.navigate("DetailsScreen", {
       hotel: hotel,
     });

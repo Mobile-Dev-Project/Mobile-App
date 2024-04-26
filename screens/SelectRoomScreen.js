@@ -1,5 +1,11 @@
 import React from "react";
-import { StyleSheet, View, ScrollView, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  View,
+  ScrollView,
+  TouchableOpacity,
+  Text,
+} from "react-native";
 import RoomCard from "../components/RoomCard";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
@@ -30,7 +36,6 @@ const SelectRoomScreen = () => {
           freeWifi={true}
           price={200}
           availability={5}
-          handleBooking={handleBooking} // Pass the handleBooking function to the RoomCard
         />
         <RoomCard
           imageSource={require("../assets/imgs/double.png")}
@@ -40,7 +45,6 @@ const SelectRoomScreen = () => {
           freeWifi={true}
           price={150}
           availability={3}
-          handleBooking={handleBooking} // Pass the handleBooking function to the RoomCard
         />
         <RoomCard
           imageSource={require("../assets/imgs/QuadRoom.png")}
@@ -50,7 +54,6 @@ const SelectRoomScreen = () => {
           freeWifi={true}
           price={150}
           availability={2}
-          handleBooking={handleBooking} // Pass the handleBooking function to the RoomCard
         />
         <RoomCard
           imageSource={require("../assets/imgs/Superior-Single-Room.jpg")}
@@ -60,9 +63,10 @@ const SelectRoomScreen = () => {
           freeWifi={true}
           price={100}
           availability={2}
-          handleBooking={handleBooking} // Pass the handleBooking function to the RoomCard
         />
-        {/* Add more RoomCard components as needed */}
+        <TouchableOpacity style={styles.bookingBtn} onPress={handleBooking}>
+          <Text style={styles.bookingBtnText}>Book Now</Text>
+        </TouchableOpacity>
       </ScrollView>
     </View>
   );
@@ -94,6 +98,19 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     backgroundColor: "#171717",
     borderRadius: 150,
+  },
+  bookingBtn: {
+    backgroundColor: "#fde047",
+    padding: 15,
+    borderRadius: 10,
+    marginVertical: 20,
+    width: "90%",
+  },
+  bookingBtnText: {
+    color: "#171717",
+    fontWeight: "bold",
+    fontSize: 20,
+    textAlign: "center",
   },
 });
 
