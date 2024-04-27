@@ -13,12 +13,19 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { FontAwesome5 } from "@expo/vector-icons";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { db, auth } from "../config/firebase"; // Adjust based on your actual path
-import { addDoc, collection, getDocs } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  getDocs,
+  doc,
+  updateDoc,
+  query,
+  where,
+} from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import { Ionicons } from "@expo/vector-icons";
 import { Picker } from "@react-native-picker/picker";
-import {} from "firebase/firestore";
 
 const BookingScreen = ({ navigation }) => {
   const [currentUser, setCurrentUser] = useState(null);
@@ -110,11 +117,48 @@ const BookingScreen = ({ navigation }) => {
         hotelName: selectedHotel,
         createdAt: new Date().toISOString(),
       });
-      Alert.alert("Success", "Booking successful.");
       navigation.navigate("BookingConfirm");
     } catch (error) {
       console.error(error);
       Alert.alert("Error", "Booking failed.");
+    }
+
+    // update the hotel availability by decrementing the number of rooms available
+    //Rooms are divided in three categories: Single, Double and Suite so we need to check which room type is selected
+    try {
+      // Define the query to find the hotel by name
+      const q = query(
+        collection(db, "destinations"),
+        where("name", "==", selectedHotel)
+      );
+      const querySnapshot = await getDocs(q);
+
+      if (!querySnapshot.empty) {
+        const hotelDoc = querySnapshot.docs[0]; // Assuming there's one match
+        const data = hotelDoc.data();
+
+        // Prepare updates based on room type
+        const updates = {};
+        if (roomType === "Single" && data.singleRooms > 0) {
+          updates.singleRooms = data.singleRooms - 1;
+        } else if (roomType === "Double" && data.doubleRooms > 0) {
+          updates.doubleRooms = data.doubleRooms - 1;
+        } else if (roomType === "Suite" && data.suiteRooms > 0) {
+          updates.suiteRooms = data.suiteRooms - 1;
+        }
+
+        // Perform the update
+        await updateDoc(doc(db, "destinations", hotelDoc.id), updates);
+        console.log("Rooms document successfully updated!");
+      } else {
+        console.error("No document matches the provided name.");
+        Alert.alert("Error", "No hotel found with the provided name.");
+        console.log(error);
+      }
+    } catch (error) {
+      // Handle any errors that occur during the fetch or update
+      console.error("Failed to update room counts:", error);
+      Alert.alert("Error", "Booking failed while updating hotel availability.");
     }
   };
 

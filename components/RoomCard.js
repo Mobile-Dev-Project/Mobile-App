@@ -43,9 +43,17 @@ const RoomCard = ({
           </View>
         )}
       </View>
-      {/* Selection buttons */}
-      <View style={styles.buttonsSection}>
-        <Text style={styles.priceText}>${price}/night</Text>
+      {/* Availability */}
+      <View style={styles.footer}>
+        <View style={styles.footercont}>
+          <Text style={styles.availabilityText}>
+            {availability} rooms available
+          </Text>
+        </View>
+        {/* Selection buttons */}
+        <View style={styles.buttonsSection}>
+          <Text style={styles.priceText}>${price}/night</Text>
+        </View>
       </View>
     </View>
   );
@@ -119,6 +127,21 @@ const styles = StyleSheet.create({
   flexcont: {
     flexDirection: "row",
     justifyContent: "space-around",
+  },
+  footer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  footercont: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 10,
+  },
+  availabilityText: {
+    marginLeft: 10,
+    marginTop: 27,
+    fontSize: 16,
+    color: "#fcfcfc",
   },
 });
 
