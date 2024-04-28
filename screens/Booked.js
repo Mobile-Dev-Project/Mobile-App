@@ -76,10 +76,14 @@ const Booked = ({ navigation }) => {
 
   const currentTime = new Date().getTime();
   const expiredBookings = rooms.filter(
-    (hotel) => currentTime - new Date(hotel.createdAt).getTime() >= 86400000
+    (hotel) =>
+      currentTime - new Date(hotel.createdAt).getTime() >= 86400000 &&
+      currentUser.email === hotel.contact
   );
   const activeBookings = rooms.filter(
-    (hotel) => currentTime - new Date(hotel.createdAt).getTime() < 86400000
+    (hotel) =>
+      currentTime - new Date(hotel.createdAt).getTime() < 86400000 &&
+      currentUser.email === hotel.contact
   );
 
   return (
@@ -101,24 +105,34 @@ const Booked = ({ navigation }) => {
             <Text style={styles.title}>
               {currentUser?.displayName}'s Active Reservations
             </Text>
-            {activeBookings.map((hotel, index) => (
-              <BookingItem
-                key={index}
-                hotel={hotel}
-                getImageForRoomType={getImageForRoomType}
-              />
-            ))}
+            {activeBookings.length > 0 ? (
+              activeBookings.map((hotel, index) => (
+                <BookingItem
+                  key={index}
+                  hotel={hotel}
+                  getImageForRoomType={getImageForRoomType}
+                />
+              ))
+            ) : (
+              <Text style={styles.noReservations}>No active reservations.</Text>
+            )}
 
             <Text style={styles.title}>
               {currentUser?.displayName}'s Expired Reservations
             </Text>
-            {expiredBookings.map((hotel, index) => (
-              <BookingItem
-                key={index}
-                hotel={hotel}
-                getImageForRoomType={getImageForRoomType}
-              />
-            ))}
+            {expiredBookings.length > 0 ? (
+              expiredBookings.map((hotel, index) => (
+                <BookingItem
+                  key={index}
+                  hotel={hotel}
+                  getImageForRoomType={getImageForRoomType}
+                />
+              ))
+            ) : (
+              <Text style={styles.noReservations}>
+                No expired reservations.
+              </Text>
+            )}
           </>
         )}
       </View>
@@ -246,6 +260,17 @@ const styles = StyleSheet.create({
   },
   location: {
     color: "white",
+  },
+  error: {
+    color: "red",
+    fontSize: 16,
+    textAlign: "center",
+  },
+  noReservations: {
+    color: "white",
+    fontSize: 16,
+    textAlign: "center",
+    marginVertical: 16,
   },
 });
 
