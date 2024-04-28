@@ -17,11 +17,31 @@ import { Entypo } from "@expo/vector-icons";
 
 const DetailsScreen = ({ navigation, route }) => {
   const handleBookNow = () => {
-    navigation.navigate("SelectRoomScreen"); // Navigate to BookingScreen when Book Now is pressed
+    navigation.navigate("SelectRoomScreen", {
+      singlePrice: singlePrice,
+      doublePrice: doublePrice,
+      suitePrice: suitePrice,
+      singleRooms: singleRooms,
+      doubleRooms: doubleRooms,
+      suiteRooms: suiteRooms,
+    }); // Navigate to BookingScreen when Book Now is pressed
   };
 
   const { hotel } = route.params;
-  const { name, location, rating, description, reviews, image } = hotel;
+  const {
+    name,
+    location,
+    rating,
+    description,
+    reviews,
+    image,
+    singlePrice,
+    doublePrice,
+    suitePrice,
+    singleRooms,
+    doubleRooms,
+    suiteRooms,
+  } = hotel;
 
   // Now you can use these properties in your JSX to display the details
 
@@ -100,7 +120,7 @@ const DetailsScreen = ({ navigation, route }) => {
       {/* price per night  and person details with new style */}
       <View style={styles.BookingInfo}>
         <Text style={styles.bookinfo}>1 night, 1 adult</Text>
-        <Text style={styles.price}>$150</Text>
+        <Text style={styles.price}>${singlePrice}</Text>
         <Text style={styles.location}>includes taxes and charges</Text>
       </View>
       <View style={styles.BookContain}>
@@ -225,7 +245,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   image: {
-    width: '90%',
+    width: "90%",
     height: 250,
     marginTop: 25,
     borderRadius: 10,

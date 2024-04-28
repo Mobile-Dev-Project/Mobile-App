@@ -10,8 +10,16 @@ import RoomCard from "../components/RoomCard";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
-const SelectRoomScreen = () => {
+const SelectRoomScreen = ({ route }) => {
   const navigation = useNavigation();
+  const {
+    singlePrice,
+    doublePrice,
+    suitePrice,
+    singleRooms,
+    doubleRooms,
+    suiteRooms,
+  } = route.params;
 
   const handleBooking = () => {
     navigation.navigate("BookingScreen");
@@ -34,8 +42,8 @@ const SelectRoomScreen = () => {
           refundable={true}
           breakfastIncluded={true}
           freeWifi={true}
-          price={200}
-          availability={5}
+          price={suitePrice}
+          availability={suiteRooms}
         />
         <RoomCard
           imageSource={require("../assets/imgs/double.png")}
@@ -43,17 +51,8 @@ const SelectRoomScreen = () => {
           refundable={true}
           breakfastIncluded={true}
           freeWifi={true}
-          price={150}
-          availability={3}
-        />
-        <RoomCard
-          imageSource={require("../assets/imgs/QuadRoom.png")}
-          roomType="Suite"
-          refundable={true}
-          breakfastIncluded={false}
-          freeWifi={true}
-          price={150}
-          availability={2}
+          price={doublePrice}
+          availability={doubleRooms}
         />
         <RoomCard
           imageSource={require("../assets/imgs/Superior-Single-Room.jpg")}
@@ -61,8 +60,8 @@ const SelectRoomScreen = () => {
           refundable={true}
           breakfastIncluded={false}
           freeWifi={true}
-          price={100}
-          availability={2}
+          price={singlePrice}
+          availability={singleRooms}
         />
         <TouchableOpacity style={styles.bookingBtn} onPress={handleBooking}>
           <Text style={styles.bookingBtnText}>Book Now</Text>
