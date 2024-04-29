@@ -14,7 +14,17 @@ The main objective of this project was to build a full-stack mobile application 
 - **Current Status:** Prototype
 
 ## Screenshots
-- *Screenshots will be included here to showcase the app in action.*
+
+![photo_3_2024-04-29_09-19-10](https://github.com/Mobile-Dev-Project/Mobile-App/assets/55021782/fa1a9d99-f7aa-488a-a833-fba3bfada2f6)
+![photo_11_2024-04-29_09-19-10](https://github.com/Mobile-Dev-Project/Mobile-App/assets/55021782/9f28f5fc-9a6f-4b6b-acc7-0800827f6e2d)
+![photo_9_2024-04-29_09-19-10](https://github.com/Mobile-Dev-Project/Mobile-App/assets/55021782/2ff61a2a-45f6-4a59-83ea-641ff6d86ec6)
+![photo_4_2024-04-29_09-19-10](https://github.com/Mobile-Dev-Project/Mobile-App/assets/55021782/908798c0-9469-4534-96ec-13d807ad4d44)
+![photo_10_2024-04-29_09-19-10](https://github.com/Mobile-Dev-Project/Mobile-App/assets/55021782/0885006c-28b7-43cb-b279-4e3bb0b9f7f0)
+![photo_8_2024-04-29_09-19-10](https://github.com/Mobile-Dev-Project/Mobile-App/assets/55021782/0357e392-c709-4f80-8d80-c3a82bffb170)
+![photo_2_2024-04-29_09-19-10](https://github.com/Mobile-Dev-Project/Mobile-App/assets/55021782/d014eaba-eeb5-4b56-be22-dc3d2a12c0bc)
+![photo_1_2024-04-29_09-19-10](https://github.com/Mobile-Dev-Project/Mobile-App/assets/55021782/6e1aeb8f-20f7-4be5-a165-1146d9b0e728)
+![photo_5_2024-04-29_09-19-10](https://github.com/Mobile-Dev-Project/Mobile-App/assets/55021782/baa91375-2042-4e3d-b62d-d05fd6513b46)
+
 
 ## Technologies and Frameworks
 - **Front-end:** JavaScript with React Native
