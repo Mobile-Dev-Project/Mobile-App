@@ -39,9 +39,6 @@ To get SuomiStay.Ay up and running on your local device, follow these steps:
 - **Expo Go App:** Required for running the app on a mobile device.
 - **Node.js:** Ensure that all dependencies are managed through `npm install`.
 
-## Contributions
-Contributions are welcome, especially in areas such as adding a payment gateway or enhancing the user interface. Please submit issues and pull requests through GitHub for review.
-
 ## Acknowledgments
 Special thanks to our instructor, Teemu Korpela, for guidance throughout the development process, and to all team members who contributed to the conceptualization and implementation of SuomiStay.Ay.
 
