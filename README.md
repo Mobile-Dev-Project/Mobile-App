@@ -24,6 +24,7 @@ The main objective of this project was to build a full-stack mobile application 
 ![photo_2_2024-04-29_09-19-10](https://github.com/Mobile-Dev-Project/Mobile-App/assets/55021782/d014eaba-eeb5-4b56-be22-dc3d2a12c0bc)
 ![photo_1_2024-04-29_09-19-10](https://github.com/Mobile-Dev-Project/Mobile-App/assets/55021782/6e1aeb8f-20f7-4be5-a165-1146d9b0e728)
 ![photo_5_2024-04-29_09-19-10](https://github.com/Mobile-Dev-Project/Mobile-App/assets/55021782/baa91375-2042-4e3d-b62d-d05fd6513b46)
+![photo_6_2024-04-29_09-19-10](https://github.com/Mobile-Dev-Project/Mobile-App/assets/55021782/ec875474-0e6f-40d2-9ae9-a1096cedc36e)
 
 
 ## Technologies and Frameworks
